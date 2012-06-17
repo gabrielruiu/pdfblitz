@@ -24,7 +24,7 @@ public class ApplicationMenuBar extends HorizontalLayout {
         upload.addItem("Computer",new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem selectedItem) {
-                getApplication().getMainWindow().addWindow(new FileUploadWindow());
+                getApplication().getMainWindow().addWindow(new FileUploader("Upload a PDF file"));
             }
         });
         upload.addItem("Website URL",new MenuBar.Command() {

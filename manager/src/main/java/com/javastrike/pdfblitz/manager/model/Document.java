@@ -1,13 +1,11 @@
 package com.javastrike.pdfblitz.manager.model;
 
-import java.io.File;
-
 public class Document {
+
 
     private byte[] content;
     private String name;
     private String MIMEtype;
-    private File documentLocation;
 
     public Document() {
     }
@@ -16,14 +14,6 @@ public class Document {
         this.content = content;
         this.name = name;
         this.MIMEtype = MIMEtype;
-        this.documentLocation = null;
-    }
-
-    public Document(byte[] content, String name, String MIMEtype, File documentLocation) {
-        this.content = content;
-        this.name = name;
-        this.MIMEtype = MIMEtype;
-        this.documentLocation = documentLocation;
     }
 
     public byte[] getContent() {
@@ -48,13 +38,5 @@ public class Document {
 
     public void setMIMEtype(String MIMEtype) {
         this.MIMEtype = MIMEtype;
-    }
-
-    public File getDocumentLocation() {
-        return documentLocation;
-    }
-
-    public void setDocumentLocation(File documentLocation) {
-        this.documentLocation = documentLocation;
     }
 }

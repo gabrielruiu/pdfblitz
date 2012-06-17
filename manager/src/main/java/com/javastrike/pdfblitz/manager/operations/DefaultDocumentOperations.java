@@ -2,22 +2,22 @@ package com.javastrike.pdfblitz.manager.operations;
 
 import com.javastrike.pdfblitz.manager.model.Document;
 
-import java.io.File;
-
 public class DefaultDocumentOperations implements DocumentOperations{
 
-    @Override
-    public File createTemporaryFileLocation(Document document) {
-        return null;
+
+    private Document document;
+
+    public DefaultDocumentOperations(Document document) {
+        this.document = document;
     }
 
     @Override
-    public void deletePageFromDocument(Document document, int pageIndex) {
+    public void deletePage(int pageIndex) {
 
     }
 
     @Override
-    public void createEmptyPage(Document document, int pageIndex) {
+    public void addEmptyPage(int pageIndex) {
 
     }
 }

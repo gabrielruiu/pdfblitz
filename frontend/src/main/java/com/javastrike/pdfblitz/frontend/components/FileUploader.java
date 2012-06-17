@@ -8,18 +8,15 @@ import com.vaadin.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.IOException;
-
 /**
  * Handles the upload of the PDF file
  */
-//TODO: organize FileUploadWindow
-//TODO: separate file upload functionality from window
-public class FileUploadWindow extends Window {
+//TODO: refurbish code
+public class FileUploader extends Window {
 
-    private Logger logger = LoggerFactory.getLogger(FileUploadWindow.class);
+    private Logger logger = LoggerFactory.getLogger(FileUploader.class);
 
+    private VerticalLayout layout;
     private Label uploadState;
     private Label result;
     private Label fileName;
@@ -27,28 +24,46 @@ public class FileUploadWindow extends Window {
     private Upload uploadField;
     private ProgressIndicator progressIndicator;
     private Button cancelUploadButton;
-    private BasicUploadReceiver counter;
+    private BasicUploadReceiver uploadReceiver;
 
     // this will hold the actual data from a PDF file
     private ByteBuffer documentContent;
 
+    private Window parentWindow;
 
-    public FileUploadWindow(){
+    public FileUploader() {
         this("Upload your PDF file");
     }
 
-    public FileUploadWindow(String caption) {
+
+    public FileUploader(String caption){
 
         super(caption);
+        configureWindow();
         initializeComponents();
         configureLayout();
         drawContents();
     }
 
+    private void configureWindow(){
+        setModal(true);
+        center();
+        setWidth("320px");
+        setHeight("300px");
+    }
+
+    private void configureLayout(){
+
+        layout.setMargin(true);
+        layout.setSpacing(true);
+        layout.setSizeFull();
+    }
+
     private void initializeComponents(){
 
-        counter = new BasicUploadReceiver();
-        uploadField = new Upload(null,counter);
+        layout = new VerticalLayout();
+        uploadReceiver = new BasicUploadReceiver();
+        uploadField = new Upload(null, uploadReceiver);
         configureUploadListeners();
         cancelUploadButton = new Button("Cancel");
         progressIndicator = new ProgressIndicator();
@@ -111,25 +126,13 @@ public class FileUploadWindow extends Window {
                 textualProgress.setVisible(false);
                 cancelUploadButton.setVisible(false);
                 setDocument(event.getFilename(),event.getMIMEType());
+                close();
             }
         });
     }
 
-    private void configureLayout(){
-        setModal(true);
-        center();
-        setWidth("320px");
-        setHeight("300px");
-    }
 
     private void drawContents(){
-
-        // main layout
-        VerticalLayout layout = new VerticalLayout();
-        layout.setMargin(true);
-        layout.setSpacing(true);
-        layout.setSizeFull();
-        this.setContent(layout);
 
         //upload field
         uploadField.setImmediate(true);
@@ -175,30 +178,19 @@ public class FileUploadWindow extends Window {
     }
 
     //TODO: check to see if the file is indeed a PDF file
-    //TODO: refurbish code
     private void setDocument(String name, String MIMEtype){
 
         Document document = prepareDocument(name, MIMEtype);
-        ((PdfBlitzApplication)getApplication()).setDocument(document);
+        ((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).setDocument(document);
         goToDocumentEditor(document);
-        close();
     }
 
-    //TODO: change the type of storage to a StreamResource
     private Document prepareDocument(String name, String MIMEtype) {
 
         Document document = new Document();
         document.setContent(documentContent.toByteArray());
         document.setName(name);
         document.setMIMEtype(MIMEtype);
-
-        try {
-            document.setDocumentLocation(File.createTempFile("document-",null));
-        } catch (IOException e) {
-            //TODO: show error message in case of exception
-            logger.error("Error creating temporary file",e);
-        }
-
         return document;
     }
 

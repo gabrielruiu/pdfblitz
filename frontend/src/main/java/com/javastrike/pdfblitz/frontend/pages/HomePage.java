@@ -19,7 +19,8 @@ public class HomePage extends VerticalLayout {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                     getApplication().getMainWindow().setContent(
-                            new DocumentEditorPage(((PdfBlitzApplication)getApplication()).getDocument()));
+                            new DocumentEditorPage(
+                                    ((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).getDocument()));
             }
         });
         singleFileOperations.addStyleName(PdfBlitzTheme.BUTTON_HOMEPAGE);
