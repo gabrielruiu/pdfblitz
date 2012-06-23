@@ -38,7 +38,6 @@ public class DocumentEditor extends GridLayout {
     private void addDocumentToolbox() {
 
         DocumentToolbox toolbox = new DocumentToolbox();
-        /*toolbox.setWidth(40,UNITS_PERCENTAGE);*/
         addComponent(toolbox, 0, 0);
         setComponentAlignment(toolbox, Alignment.MIDDLE_CENTER);
     }
@@ -46,7 +45,6 @@ public class DocumentEditor extends GridLayout {
     private void addDocumentPreview() {
 
         DocumentPreview preview = new DocumentPreview(document);
-        /*preview.setWidth(60,UNITS_PERCENTAGE);*/
         addComponent(preview,1,0);
         setComponentAlignment(preview, Alignment.MIDDLE_CENTER);
     }

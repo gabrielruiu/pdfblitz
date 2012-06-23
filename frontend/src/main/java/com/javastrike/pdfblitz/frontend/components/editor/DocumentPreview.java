@@ -59,7 +59,7 @@ public class DocumentPreview extends VerticalLayout {
         StreamResource streamResource;
         try {
             streamResource = (StreamResource)((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
-                    getDocumentManager().getDocument(StreamResource.class);
+                    getDocumentManager().getDocument(document,StreamResource.class);
         } catch (ConversionException e) {
             logger.error("Error converting document",e);
             streamResource = null;

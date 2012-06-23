@@ -1,22 +1,15 @@
 package com.javastrike.pdfblitz.frontend.components;
 
 import com.itextpdf.text.pdf.ByteBuffer;
-import com.javastrike.pdfblitz.frontend.PdfBlitzApplication;
-import com.javastrike.pdfblitz.frontend.pages.DocumentEditorPage;
 import com.javastrike.pdfblitz.manager.model.Document;
 import com.vaadin.ui.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handles the upload of the PDF file
  */
-//TODO: refurbish code
-public class FileUploader extends Window {
+//TODO: develop a component that handles both single-file upload and multiple-file uploads
+public class FileUploader extends VerticalLayout {
 
-    private Logger logger = LoggerFactory.getLogger(FileUploader.class);
-
-    private VerticalLayout layout;
     private Label uploadState;
     private Label result;
     private Label fileName;
@@ -28,40 +21,45 @@ public class FileUploader extends Window {
 
     // this will hold the actual data from a PDF file
     private ByteBuffer documentContent;
-
-    private Window parentWindow;
-
-    public FileUploader() {
-        this("Upload your PDF file");
-    }
+    private Document document;
 
 
-    public FileUploader(String caption){
+    public FileUploader(){
 
-        super(caption);
-        configureWindow();
         initializeComponents();
         configureLayout();
         drawContents();
     }
 
-    private void configureWindow(){
-        setModal(true);
-        center();
-        setWidth("320px");
-        setHeight("300px");
+    public Document getPayload(){
+        return document;
+    }
+
+    public void addListener(Upload.SucceededListener succeededListener){
+        uploadField.addListener(succeededListener);
+    }
+
+    public void addListener(Upload.FailedListener failedListener){
+        uploadField.addListener(failedListener);
+    }
+
+    public void addListener(Upload.ProgressListener progressListener){
+        uploadField.addListener(progressListener);
+    }
+
+    public void addListener(Upload.FinishedListener finishedListener){
+        uploadField.addListener(finishedListener);
     }
 
     private void configureLayout(){
 
-        layout.setMargin(true);
-        layout.setSpacing(true);
-        layout.setSizeFull();
+        setMargin(true);
+        setSpacing(true);
+        setSizeFull();
     }
 
     private void initializeComponents(){
 
-        layout = new VerticalLayout();
         uploadReceiver = new BasicUploadReceiver();
         uploadField = new Upload(null, uploadReceiver);
         configureUploadListeners();
@@ -126,7 +124,6 @@ public class FileUploader extends Window {
                 textualProgress.setVisible(false);
                 cancelUploadButton.setVisible(false);
                 setDocument(event.getFilename(),event.getMIMEType());
-                close();
             }
         });
     }
@@ -179,23 +176,15 @@ public class FileUploader extends Window {
 
     //TODO: check to see if the file is indeed a PDF file
     private void setDocument(String name, String MIMEtype){
-
-        Document document = prepareDocument(name, MIMEtype);
-        ((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).setDocument(document);
-        goToDocumentEditor(document);
+        prepareDocument(name, MIMEtype);
     }
 
-    private Document prepareDocument(String name, String MIMEtype) {
+    private void prepareDocument(String name, String MIMEtype) {
 
-        Document document = new Document();
+        document = new Document();
         document.setContent(documentContent.toByteArray());
         document.setName(name);
         document.setMIMEtype(MIMEtype);
-        return document;
-    }
-
-    private void goToDocumentEditor(Document document){
-        getApplication().getMainWindow().setContent(new DocumentEditorPage(document));
     }
 
 

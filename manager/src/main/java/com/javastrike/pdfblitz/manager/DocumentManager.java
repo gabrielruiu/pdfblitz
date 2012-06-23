@@ -15,18 +15,11 @@ import java.util.Set;
 public class DocumentManager {
 
 
-    private Document document;
     private DocumentOperations documentOperations;
     private Set<DocumentProvider> documentProviders;
 
-
     public DocumentManager() {
-        this(null);
-    }
 
-    public DocumentManager(Document document) {
-
-        setDocument(document);
         documentProviders = new HashSet<DocumentProvider>();
         registerDefaultProviders();
     }
@@ -45,15 +38,7 @@ public class DocumentManager {
         documentProviders.remove(provider);
     }
 
-    public void setDocument(Document document){
-        this.document = document;
-    }
-
-    public Document getDocument() {
-        return document;
-    }
-
-    public Object getDocument(Class clazz) throws ConversionException, UnsupportedConversionType{
+    public Object getDocument(Document document, Class clazz) throws ConversionException, UnsupportedConversionType{
 
         for (DocumentProvider provider : documentProviders){
             if (provider.supports(clazz)){

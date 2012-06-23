@@ -25,13 +25,12 @@ public class DocumentFileProvider implements DocumentProvider<File>{
     @Override
     public File provideDocument(Document document) throws ConversionException{
 
-        if (documentLocation == null) {
-            try {
-                documentLocation = File.createTempFile("document-",null);
-            } catch (IOException e) {
-                logger.error("Error creating temporary file for document",e);
-                throw new ConversionException("Error creating temporary file for document",e);
-            }
+        documentLocation = null;
+        try {
+            documentLocation = File.createTempFile("document-",null);
+        } catch (IOException e) {
+            logger.error("Error creating temporary file for document",e);
+            throw new ConversionException("Error creating temporary file for document",e);
         }
         return documentLocation;
     }

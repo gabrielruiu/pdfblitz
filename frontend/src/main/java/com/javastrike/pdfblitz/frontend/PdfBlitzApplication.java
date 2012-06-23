@@ -1,13 +1,11 @@
 package com.javastrike.pdfblitz.frontend;
 
 import com.javastrike.pdfblitz.frontend.pages.HomePage;
-import com.javastrike.pdfblitz.frontend.provider.StreamResourceProvider;
 import com.javastrike.pdfblitz.frontend.theme.PdfBlitzTheme;
 import com.javastrike.pdfblitz.manager.DocumentManager;
-import com.javastrike.pdfblitz.manager.model.Document;
 import com.vaadin.service.ApplicationContext;
-import com.vaadin.ui.Window;
 import eu.livotov.tpt.TPTApplication;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 
 /**
@@ -22,9 +20,8 @@ import org.springframework.beans.factory.annotation.Configurable;
 @Configurable
 public class PdfBlitzApplication extends TPTApplication implements ApplicationContext.TransactionListener{
 
-
+    @Autowired
     private DocumentManager documentManager;
-    private Window mainWindow;
 
     public DocumentManager getDocumentManager() {
         return documentManager;
@@ -34,26 +31,15 @@ public class PdfBlitzApplication extends TPTApplication implements ApplicationCo
         this.documentManager = documentManager;
     }
 
-    public void setDocument(Document document){
-        documentManager.setDocument(document);
-    }
-
-    public Document getDocument(){
-        return documentManager.getDocument();
-    }
-
     @Override
     public void applicationInit() {
 
         setTheme(PdfBlitzTheme.THEME_NAME);
 
         documentManager = new DocumentManager();
-        setupDocumentManager();
+        /*setupDocumentManager();*/
 
-        mainWindow = new Window("PdfBlitz");
-        mainWindow.addComponent(new HomePage());
-
-        setMainWindow(mainWindow);
+        setMainWindow(new HomePage());
     }
 
     @Override
@@ -61,7 +47,7 @@ public class PdfBlitzApplication extends TPTApplication implements ApplicationCo
 
     }
 
-    private void setupDocumentManager(){
+/*    private void setupDocumentManager(){
         documentManager.registerDocumentProvider(new StreamResourceProvider());
-    }
+    }*/
 }

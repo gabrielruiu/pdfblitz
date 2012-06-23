@@ -1,43 +1,98 @@
 package com.javastrike.pdfblitz.frontend.pages;
 
-import com.javastrike.pdfblitz.frontend.PdfBlitzApplication;
+import com.javastrike.pdfblitz.frontend.components.home.HomePageButton;
 import com.javastrike.pdfblitz.frontend.theme.PdfBlitzTheme;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.VerticalLayout;
+import com.javastrike.pdfblitz.frontend.windows.FileUploadWindow;
+import com.vaadin.event.LayoutEvents;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.GridLayout;
 
-public class HomePage extends VerticalLayout {
+import java.util.ArrayList;
+import java.util.List;
 
+public class HomePage extends PdfBlitzPage {
+
+
+    private static final String PAGE_NAME = "homepage";
+
+    private GridLayout layout;
+    private HomePageButton singlePdfOperations;
+    private HomePageButton conversionOperations;
 
     public HomePage() {
 
-        setSizeFull();
+        super("PdfBlitz - select an operation");
+        initializeComponents();
+        configureLayout();
+        drawContents();
+    }
 
-        /**
-         * Button for accessing the page with tools for operating on SINGLE files
-         */
-        Button singleFileOperations = new Button("Single", new Button.ClickListener(){
+    @Override
+    String getPageName() {
+        return PAGE_NAME;
+    }
+
+    private void initializeComponents() {
+
+        layout = new GridLayout();
+
+        singlePdfOperations = new HomePageButton(new LayoutEvents.LayoutClickListener() {
             @Override
-            public void buttonClick(Button.ClickEvent event) {
-                    getApplication().getMainWindow().setContent(
-                            new DocumentEditorPage(
-                                    ((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).getDocument()));
+            public void layoutClick(LayoutEvents.LayoutClickEvent event) {
+                getWindow().addWindow(new FileUploadWindow());
             }
-        });
-        singleFileOperations.addStyleName(PdfBlitzTheme.BUTTON_HOMEPAGE);
-        addComponent(singleFileOperations);
+        },
+        "Upload a PDF document",
+        getSingleOperationsList()
+        );
+        singlePdfOperations.addStyleName(PdfBlitzTheme.BUTTON_HOMEPAGE_LEFT);
 
-
-        /**
-         * Button for accessing the page with tools for operating on MULTIPLE files
-         */
-        Button multipleFilesOperations = new Button("Multiple", new Button.ClickListener() {
+        conversionOperations = new HomePageButton(new LayoutEvents.LayoutClickListener() {
             @Override
-            public void buttonClick(Button.ClickEvent event) {
+            public void layoutClick(LayoutEvents.LayoutClickEvent event) {
 
             }
-        });
-        multipleFilesOperations.addStyleName(PdfBlitzTheme.BUTTON_HOMEPAGE);
-        addComponent(multipleFilesOperations);
+        },
+        "Convert files to and from PDF format",
+        getConversionOperationsList());
+        conversionOperations.addStyleName(PdfBlitzTheme.BUTTON_HOMEPAGE_RIGHT);
+    }
 
+    private void configureLayout() {
+
+        layout.setSizeFull();
+        layout.setColumns(2);
+        layout.setRows(1);
+        layout.setHeight(800,UNITS_PIXELS);
+    }
+
+    private void drawContents() {
+
+        layout.addComponent(singlePdfOperations,0,0);
+        layout.setComponentAlignment(singlePdfOperations, Alignment.MIDDLE_RIGHT);
+
+        layout.addComponent(conversionOperations,1,0);
+        layout.setComponentAlignment(conversionOperations,Alignment.MIDDLE_LEFT);
+
+        addComponent(layout);
+    }
+
+    private List<String> getSingleOperationsList(){
+
+        List<String> singleOperationsList = new ArrayList<String>();
+        singleOperationsList.add("Delete or create new pages");
+        singleOperationsList.add("Split a single file into several documents");
+        singleOperationsList.add("Concatenate several PDF files");
+        return singleOperationsList;
+    }
+
+
+    private List<String> getConversionOperationsList() {
+
+        List<String> multipleOperationsList = new ArrayList<String>();
+        multipleOperationsList.add("Upload several images and transform into PDF");
+        multipleOperationsList.add("Convert a Microsoft Word document");
+        multipleOperationsList.add("Download a website and turn it into a PDF");
+        return multipleOperationsList;
     }
 }

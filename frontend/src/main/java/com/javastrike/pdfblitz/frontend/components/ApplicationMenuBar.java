@@ -1,5 +1,6 @@
 package com.javastrike.pdfblitz.frontend.components;
 
+import com.javastrike.pdfblitz.frontend.windows.FileUploadWindow;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.MenuBar;
 
@@ -24,7 +25,8 @@ public class ApplicationMenuBar extends HorizontalLayout {
         upload.addItem("Computer",new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem selectedItem) {
-                getApplication().getMainWindow().addWindow(new FileUploader("Upload a PDF file"));
+                /*getApplication().getMainWindow().addWindow(new FileUploader("Upload a PDF file"));*/
+                getApplication().getMainWindow().addWindow(new FileUploadWindow());
             }
         });
         upload.addItem("Website URL",new MenuBar.Command() {

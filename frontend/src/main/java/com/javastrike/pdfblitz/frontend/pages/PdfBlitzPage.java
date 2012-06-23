@@ -1,12 +1,26 @@
 package com.javastrike.pdfblitz.frontend.pages;
 
-import com.javastrike.pdfblitz.frontend.components.ApplicationMenuBar;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.terminal.ExternalResource;
+import com.vaadin.ui.Window;
 
-public abstract class PdfBlitzPage extends VerticalLayout {
+public abstract class PdfBlitzPage extends Window {
 
-
-    public PdfBlitzPage() {
-        addComponent(new ApplicationMenuBar());
+    protected PdfBlitzPage() {
+        this("PdfBlitz Page");
     }
+
+    protected PdfBlitzPage(String caption) {
+
+        super(caption);
+        setName(getPageName());
+    }
+
+    //TODO: bug: after navigating to a previous page using the Back button,
+    public void goToPage(PdfBlitzPage pdfBlitzPage){
+
+        getApplication().addWindow(pdfBlitzPage);
+        open(new ExternalResource(pdfBlitzPage.getURL()));
+    }
+
+    abstract String getPageName();
 }
