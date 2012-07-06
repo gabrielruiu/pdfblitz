@@ -1,26 +1,20 @@
 package com.javastrike.pdfblitz.frontend.pages;
 
-import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Window;
 
+@SuppressWarnings("serial")
 public abstract class PdfBlitzPage extends Window {
 
-    protected PdfBlitzPage() {
-        this("PdfBlitz Page");
-    }
+    private String pageName;
 
-    protected PdfBlitzPage(String caption) {
+    protected PdfBlitzPage(String caption, String pageName) {
 
         super(caption);
-        setName(getPageName());
+        this.pageName = pageName;
+        setName(pageName);
     }
 
-    //TODO: bug: after navigating to a previous page using the Back button,
-    public void goToPage(PdfBlitzPage pdfBlitzPage){
-
-        getApplication().addWindow(pdfBlitzPage);
-        open(new ExternalResource(pdfBlitzPage.getURL()));
-    }
-
-    abstract String getPageName();
+    public String getPageName(){
+        return pageName;
+    };
 }

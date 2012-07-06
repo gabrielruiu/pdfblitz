@@ -1,11 +1,11 @@
 package com.javastrike.pdfblitz.manager;
 
+import com.javastrike.pdfblitz.manager.converter.DocumentFileProvider;
+import com.javastrike.pdfblitz.manager.converter.DocumentProvider;
 import com.javastrike.pdfblitz.manager.exception.ConversionException;
 import com.javastrike.pdfblitz.manager.exception.UnsupportedConversionType;
 import com.javastrike.pdfblitz.manager.model.Document;
 import com.javastrike.pdfblitz.manager.operations.DocumentOperations;
-import com.javastrike.pdfblitz.manager.provider.DocumentFileProvider;
-import com.javastrike.pdfblitz.manager.provider.DocumentProvider;
 import com.javastrike.pdfblitz.manager.provider.DocumentStreamProvider;
 
 import java.util.HashSet;

@@ -1,66 +1,82 @@
-package com.javastrike.pdfblitz.frontend.components;
+package com.javastrike.pdfblitz.frontend.components.fileupload;
 
-import com.itextpdf.text.pdf.ByteBuffer;
 import com.javastrike.pdfblitz.manager.model.Document;
 import com.vaadin.ui.*;
 
+import java.io.ByteArrayOutputStream;
+
 /**
- * Handles the upload of the PDF file
+ * @author Ruiu Gabriel Mihai (gabriel.ruiu@mail.com)
  */
-//TODO: develop a component that handles both single-file upload and multiple-file uploads
-public class FileUploader extends VerticalLayout {
+@SuppressWarnings("serial")
+public class SingleFileUploader extends FileUploader<Document>{
+
+
+    private VerticalLayout verticalLayout;
+    private Upload uploadField;
 
     private Label uploadState;
     private Label result;
     private Label fileName;
     private Label textualProgress;
-    private Upload uploadField;
     private ProgressIndicator progressIndicator;
     private Button cancelUploadButton;
-    private BasicUploadReceiver uploadReceiver;
+    private SingleUploadReceiver uploadReceiver;
+    private ByteArrayOutputStream contentStream;
 
-    // this will hold the actual data from a PDF file
-    private ByteBuffer documentContent;
-    private Document document;
+    private Document payload;
 
-
-    public FileUploader(){
+    public SingleFileUploader() {
 
         initializeComponents();
         configureLayout();
         drawContents();
     }
 
-    public Document getPayload(){
-        return document;
+    @Override
+    public Document getPayload() {
+
+        payload.setContent(contentStream.toByteArray());
+        return payload;
     }
 
-    public void addListener(Upload.SucceededListener succeededListener){
-        uploadField.addListener(succeededListener);
+    @Override
+    public void addListener(Upload.StartedListener startedListener) {
+        uploadField.addListener(startedListener);
     }
 
-    public void addListener(Upload.FailedListener failedListener){
-        uploadField.addListener(failedListener);
-    }
-
-    public void addListener(Upload.ProgressListener progressListener){
+    @Override
+    public void addListener(Upload.ProgressListener progressListener) {
         uploadField.addListener(progressListener);
     }
 
-    public void addListener(Upload.FinishedListener finishedListener){
+    @Override
+    public void addListener(Upload.FinishedListener finishedListener) {
         uploadField.addListener(finishedListener);
+    }
+
+    @Override
+    public void addListener(Upload.FailedListener failedListener) {
+        uploadField.addListener(failedListener);
+    }
+
+    @Override
+    public void addListener(Upload.SucceededListener succeededListener) {
+        uploadField.addListener(succeededListener);
     }
 
     private void configureLayout(){
 
-        setMargin(true);
-        setSpacing(true);
-        setSizeFull();
+        verticalLayout.setMargin(true);
+        verticalLayout.setSpacing(true);
+        verticalLayout.setSizeUndefined();
     }
 
     private void initializeComponents(){
 
-        uploadReceiver = new BasicUploadReceiver();
+        contentStream = new ByteArrayOutputStream();
+        verticalLayout = new VerticalLayout();
+        uploadReceiver = new SingleUploadReceiver();
         uploadField = new Upload(null, uploadReceiver);
         configureUploadListeners();
         cancelUploadButton = new Button("Cancel");
@@ -69,7 +85,6 @@ public class FileUploader extends VerticalLayout {
         result = new Label();
         fileName = new Label();
         textualProgress = new Label();
-        documentContent = new ByteBuffer();
     }
 
     private void configureUploadListeners(){
@@ -78,10 +93,10 @@ public class FileUploader extends VerticalLayout {
             @Override
             public void uploadStarted(Upload.StartedEvent event) {
 
-                // this method gets called immediatedly after upload is started
+                // this method gets called immediately after upload is started
                 progressIndicator.setValue(0f);
                 progressIndicator.setVisible(true);
-                progressIndicator.setPollingInterval(500); // hit server frequantly to get
+                progressIndicator.setPollingInterval(500); // hit server frequently to get
                 textualProgress.setVisible(true);
                 // updates to client
                 uploadState.setValue("Uploading");
@@ -123,11 +138,9 @@ public class FileUploader extends VerticalLayout {
                 progressIndicator.setVisible(false);
                 textualProgress.setVisible(false);
                 cancelUploadButton.setVisible(false);
-                setDocument(event.getFilename(),event.getMIMEType());
             }
         });
     }
-
 
     private void drawContents(){
 
@@ -174,25 +187,16 @@ public class FileUploader extends VerticalLayout {
         addComponent(panel);
     }
 
-    //TODO: check to see if the file is indeed a PDF file
-    private void setDocument(String name, String MIMEtype){
-        prepareDocument(name, MIMEtype);
-    }
 
-    private void prepareDocument(String name, String MIMEtype) {
+    private class SingleUploadReceiver implements Upload.Receiver {
 
-        document = new Document();
-        document.setContent(documentContent.toByteArray());
-        document.setName(name);
-        document.setMIMEtype(MIMEtype);
-    }
-
-
-    private class BasicUploadReceiver implements Upload.Receiver {
-
-        public ByteBuffer receiveUpload(String filename, String MIMEType) {
-            return documentContent;
+        public ByteArrayOutputStream receiveUpload(String filename, String MIMEType) {
+            if (payload == null){
+                payload = new Document();
+            }
+            payload.setName(filename);
+            payload.setMIMEtype(MIMEType);
+            return contentStream;
         }
     }
-
 }

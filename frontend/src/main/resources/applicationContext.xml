@@ -12,6 +12,7 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
     <context:annotation-config/>
    	<context:component-scan base-package="com.javastrike.pdfblitz.frontend"/>
+   	<context:component-scan base-package="com.javastrike.pdfblitz.frontend.spring"/>
 
     <!-- Turn on @Autowired, @PostConstruct etc support -->
     <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />

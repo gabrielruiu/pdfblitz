@@ -14,7 +14,8 @@ public class DocumentEditor extends GridLayout {
 
         this.document = document;
         configureLayout();
-        addComponentsToLayout();
+        drawContents();
+
     }
 
     private void configureLayout() {
@@ -29,7 +30,7 @@ public class DocumentEditor extends GridLayout {
     }
 
 
-    private void addComponentsToLayout() {
+    private void drawContents() {
 
         addDocumentToolbox();
         addDocumentPreview();

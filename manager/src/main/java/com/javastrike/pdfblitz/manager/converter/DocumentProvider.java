@@ -1,4 +1,4 @@
-package com.javastrike.pdfblitz.manager.provider;
+package com.javastrike.pdfblitz.manager.converter;
 
 import com.javastrike.pdfblitz.manager.exception.ConversionException;
 import com.javastrike.pdfblitz.manager.model.Document;

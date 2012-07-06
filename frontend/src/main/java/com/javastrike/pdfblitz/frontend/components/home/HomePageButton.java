@@ -28,7 +28,7 @@ public class HomePageButton extends CustomComponent {
 
     private void configureComponent() {
 
-        setWidth("360px");
+        setSizeUndefined();
         addStyleName(PdfBlitzTheme.BUTTON_HOMEPAGE);
     }
 

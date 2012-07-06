@@ -1,11 +1,12 @@
 package com.javastrike.pdfblitz.frontend;
 
 import com.javastrike.pdfblitz.frontend.pages.HomePage;
+import com.javastrike.pdfblitz.frontend.provider.StreamResourceConverter;
 import com.javastrike.pdfblitz.frontend.theme.PdfBlitzTheme;
 import com.javastrike.pdfblitz.manager.DocumentManager;
 import com.vaadin.service.ApplicationContext;
+import com.vaadin.ui.Window;
 import eu.livotov.tpt.TPTApplication;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 
 /**
@@ -20,7 +21,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 @Configurable
 public class PdfBlitzApplication extends TPTApplication implements ApplicationContext.TransactionListener{
 
-    @Autowired
+    //TODO: inject using Spring
     private DocumentManager documentManager;
 
     public DocumentManager getDocumentManager() {
@@ -37,7 +38,7 @@ public class PdfBlitzApplication extends TPTApplication implements ApplicationCo
         setTheme(PdfBlitzTheme.THEME_NAME);
 
         documentManager = new DocumentManager();
-        /*setupDocumentManager();*/
+        setupDocumentManager();
 
         setMainWindow(new HomePage());
     }
@@ -47,7 +48,21 @@ public class PdfBlitzApplication extends TPTApplication implements ApplicationCo
 
     }
 
-/*    private void setupDocumentManager(){
-        documentManager.registerDocumentProvider(new StreamResourceProvider());
-    }*/
+    @Override
+    public Window getWindow(String name) {
+
+        Window requestedWindow = super.getWindow(name);
+        if (super.getWindow(name) == null){
+            requestedWindow = new Window();
+            addWindow(requestedWindow);
+        }
+        return requestedWindow;
+    }
+
+    //TODO: remove when DocumentManager will be injected through Spring
+    private void setupDocumentManager(){
+
+        documentManager = new DocumentManager();
+        documentManager.registerDocumentProvider(new StreamResourceConverter());
+    }
 }

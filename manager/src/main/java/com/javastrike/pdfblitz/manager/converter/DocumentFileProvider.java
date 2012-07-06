@@ -1,9 +1,8 @@
-package com.javastrike.pdfblitz.manager.provider;
+package com.javastrike.pdfblitz.manager.converter;
 
 import com.javastrike.pdfblitz.manager.exception.ConversionException;
 import com.javastrike.pdfblitz.manager.model.Document;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,10 +10,10 @@ import java.io.IOException;
 /**
  * @author Ruiu Gabriel Mihai (gabriel.ruiu@mail.com)
  */
-public class DocumentFileProvider implements DocumentProvider<File>{
+public class DocumentFileProvider implements DocumentProvider<File> {
 
 
-    private Logger logger = LoggerFactory.getLogger(DocumentFileProvider.class);
+    private Logger logger = Logger.getLogger(DocumentFileProvider.class);
     private File documentLocation;
 
     @Override

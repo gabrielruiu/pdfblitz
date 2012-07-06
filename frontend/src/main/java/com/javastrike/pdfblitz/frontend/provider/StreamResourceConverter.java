@@ -1,9 +1,9 @@
 package com.javastrike.pdfblitz.frontend.provider;
 
 import com.javastrike.pdfblitz.frontend.PdfBlitzApplication;
+import com.javastrike.pdfblitz.manager.converter.DocumentProvider;
 import com.javastrike.pdfblitz.manager.exception.ConversionException;
 import com.javastrike.pdfblitz.manager.model.Document;
-import com.javastrike.pdfblitz.manager.provider.DocumentProvider;
 import com.vaadin.terminal.StreamResource;
 
 import java.io.ByteArrayInputStream;
@@ -12,7 +12,7 @@ import java.io.InputStream;
 /**
  * @author Ruiu Gabriel Mihai (gabriel.ruiu@mail.com)
  */
-public class StreamResourceProvider implements DocumentProvider<StreamResource>{
+public class StreamResourceConverter implements DocumentProvider<StreamResource> {
 
 
     @Override

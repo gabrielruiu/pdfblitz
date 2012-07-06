@@ -1,5 +1,6 @@
 package com.javastrike.pdfblitz.frontend.pages;
 
+import com.javastrike.pdfblitz.frontend.components.fileupload.UploadType;
 import com.javastrike.pdfblitz.frontend.components.home.HomePageButton;
 import com.javastrike.pdfblitz.frontend.theme.PdfBlitzTheme;
 import com.javastrike.pdfblitz.frontend.windows.FileUploadWindow;
@@ -10,10 +11,11 @@ import com.vaadin.ui.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("serial")
 public class HomePage extends PdfBlitzPage {
 
 
-    private static final String PAGE_NAME = "homepage";
+    public static final String PAGE_NAME = "homepage";
 
     private GridLayout layout;
     private HomePageButton singlePdfOperations;
@@ -21,15 +23,10 @@ public class HomePage extends PdfBlitzPage {
 
     public HomePage() {
 
-        super("PdfBlitz - select an operation");
+        super("PdfBlitz - select an operation", PAGE_NAME);
         initializeComponents();
         configureLayout();
         drawContents();
-    }
-
-    @Override
-    String getPageName() {
-        return PAGE_NAME;
     }
 
     private void initializeComponents() {
@@ -39,10 +36,10 @@ public class HomePage extends PdfBlitzPage {
         singlePdfOperations = new HomePageButton(new LayoutEvents.LayoutClickListener() {
             @Override
             public void layoutClick(LayoutEvents.LayoutClickEvent event) {
-                getWindow().addWindow(new FileUploadWindow());
+                getWindow().addWindow(new FileUploadWindow(UploadType.SINGLE));
             }
         },
-        "Upload a PDF document",
+        "PDF tools",
         getSingleOperationsList()
         );
         singlePdfOperations.addStyleName(PdfBlitzTheme.BUTTON_HOMEPAGE_LEFT);
@@ -53,7 +50,7 @@ public class HomePage extends PdfBlitzPage {
 
             }
         },
-        "Convert files to and from PDF format",
+        "Conversion tools",
         getConversionOperationsList());
         conversionOperations.addStyleName(PdfBlitzTheme.BUTTON_HOMEPAGE_RIGHT);
     }

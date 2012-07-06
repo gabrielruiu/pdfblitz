@@ -8,13 +8,13 @@ import com.vaadin.terminal.StreamResource;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 //TODO: lazy loading component
 public class DocumentPreview extends VerticalLayout {
 
-    private Logger logger = LoggerFactory.getLogger(DocumentPreview.class);
+
+    private Logger logger = Logger.getLogger(DocumentPreview.class);
     private Document document;
 
     public DocumentPreview(Document fileResource) {

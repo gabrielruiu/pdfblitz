@@ -1,6 +1,5 @@
-package com.javastrike.pdfblitz.manager.provider;
+package com.javastrike.pdfblitz.manager.converter;
 
-import com.javastrike.pdfblitz.manager.converter.DocumentProvider;
 import com.javastrike.pdfblitz.manager.model.Document;
 
 import java.io.ByteArrayInputStream;
