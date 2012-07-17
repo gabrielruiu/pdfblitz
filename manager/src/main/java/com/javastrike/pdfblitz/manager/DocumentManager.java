@@ -1,50 +1,61 @@
 package com.javastrike.pdfblitz.manager;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import com.javastrike.pdfblitz.manager.converter.AdditionalConversionData;
+import com.javastrike.pdfblitz.manager.converter.DocumentConverter;
 import com.javastrike.pdfblitz.manager.converter.DocumentFileProvider;
-import com.javastrike.pdfblitz.manager.converter.DocumentProvider;
+import com.javastrike.pdfblitz.manager.converter.DocumentStreamProvider;
 import com.javastrike.pdfblitz.manager.exception.ConversionException;
 import com.javastrike.pdfblitz.manager.exception.UnsupportedConversionType;
 import com.javastrike.pdfblitz.manager.model.Document;
 import com.javastrike.pdfblitz.manager.operations.DocumentOperations;
-import com.javastrike.pdfblitz.manager.provider.DocumentStreamProvider;
-
-import java.util.HashSet;
-import java.util.Set;
 
 //TODO: UNDO functionality?
 public class DocumentManager {
 
 
     private DocumentOperations documentOperations;
-    private Set<DocumentProvider> documentProviders;
+    private Set<DocumentConverter> documentConverters;
 
     public DocumentManager() {
 
-        documentProviders = new HashSet<DocumentProvider>();
+        documentConverters = new HashSet<DocumentConverter>();
         registerDefaultProviders();
     }
 
     private void registerDefaultProviders(){
 
-        registerDocumentProvider(new DocumentFileProvider());
-        registerDocumentProvider(new DocumentStreamProvider());
+        registerDocumentConverter(new DocumentFileProvider());
+        registerDocumentConverter(new DocumentStreamProvider());
     }
 
-    public void registerDocumentProvider(DocumentProvider provider){
-        documentProviders.add(provider);
+    public void registerDocumentConverter(DocumentConverter provider){
+        documentConverters.add(provider);
     }
 
-    public void removeDocumentProvider(DocumentProvider provider){
-        documentProviders.remove(provider);
+    public void removeDocumentConverter(DocumentConverter provider){
+        documentConverters.remove(provider);
     }
 
-    public Object getDocument(Document document, Class clazz) throws ConversionException, UnsupportedConversionType{
+    public Object convertFromDocument(Document document, Class clazz) throws ConversionException, UnsupportedConversionType{
 
-        for (DocumentProvider provider : documentProviders){
-            if (provider.supports(clazz)){
-                return provider.provideDocument(document);
+        for (DocumentConverter converter : documentConverters){
+            if (converter.supports(clazz)){
+                return converter.provideDocument(document);
             }
         }
         throw new UnsupportedConversionType("Conversion into type " + clazz.getName() + " is not supported");
+    }
+    
+    public Document convertToDocument(Object object, AdditionalConversionData additionalData) throws ConversionException, UnsupportedConversionType {
+    	
+    	for (DocumentConverter converter : documentConverters){
+            if (converter.supports(object.getClass())){
+                return converter.convertToDocument(object, additionalData);
+            }
+        }
+        throw new UnsupportedConversionType("Conversion from type " + object.getClass().getName() + " is not supported");
     }
 }

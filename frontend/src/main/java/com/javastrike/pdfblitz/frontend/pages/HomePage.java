@@ -47,7 +47,7 @@ public class HomePage extends PdfBlitzPage {
         conversionOperations = new HomePageButton(new LayoutEvents.LayoutClickListener() {
             @Override
             public void layoutClick(LayoutEvents.LayoutClickEvent event) {
-
+                getWindow().addWindow(new FileUploadWindow(UploadType.MULTIPLE));
             }
         },
         "Conversion tools",

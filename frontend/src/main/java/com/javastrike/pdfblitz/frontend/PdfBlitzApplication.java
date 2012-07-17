@@ -28,10 +28,6 @@ public class PdfBlitzApplication extends TPTApplication implements ApplicationCo
         return documentManager;
     }
 
-    public void setDocumentManager(DocumentManager documentManager) {
-        this.documentManager = documentManager;
-    }
-
     @Override
     public void applicationInit() {
 
@@ -63,6 +59,6 @@ public class PdfBlitzApplication extends TPTApplication implements ApplicationCo
     private void setupDocumentManager(){
 
         documentManager = new DocumentManager();
-        documentManager.registerDocumentProvider(new StreamResourceConverter());
+        documentManager.registerDocumentConverter(new StreamResourceConverter());
     }
 }

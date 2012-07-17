@@ -3,6 +3,12 @@ package com.javastrike.pdfblitz.frontend.components.fileupload;
 import com.vaadin.ui.VerticalLayout;
 
 /**
+ * Parent class for file-uploading components.
+ *
+ * @see SingleFileUploader
+ * @see MultiFileUploader
+ * @see FileUploaderFactory
+ *
  * @author Ruiu Gabriel Mihai (gabriel.ruiu@mail.com)
  */
 @SuppressWarnings("serial")

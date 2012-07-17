@@ -10,3 +10,6 @@
 *.ipr
 *.idea/
 target/
+*.project
+*.classpath
+.settings/

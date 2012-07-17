@@ -6,6 +6,13 @@ import com.vaadin.ui.*;
 import java.io.ByteArrayOutputStream;
 
 /**
+ * Component that handles single-file uploads.
+ *
+ * @see DocumentUploader
+ * @see UploadType
+ * @see FileUploaderFactory
+ * @see FileUploader
+ *
  * @author Ruiu Gabriel Mihai (gabriel.ruiu@mail.com)
  */
 @SuppressWarnings("serial")
@@ -191,9 +198,8 @@ public class SingleFileUploader extends FileUploader<Document>{
     private class SingleUploadReceiver implements Upload.Receiver {
 
         public ByteArrayOutputStream receiveUpload(String filename, String MIMEType) {
-            if (payload == null){
-                payload = new Document();
-            }
+
+            payload = new Document();
             payload.setName(filename);
             payload.setMIMEtype(MIMEType);
             return contentStream;

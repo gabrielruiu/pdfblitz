@@ -10,7 +10,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import org.apache.log4j.Logger;
 
-//TODO: lazy loading component
+//TODO: lazy load component
 public class DocumentPreview extends VerticalLayout {
 
 
@@ -59,7 +59,7 @@ public class DocumentPreview extends VerticalLayout {
         StreamResource streamResource;
         try {
             streamResource = (StreamResource)((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
-                    getDocumentManager().getDocument(document,StreamResource.class);
+                    getDocumentManager().convertFromDocument(document,StreamResource.class);
         } catch (ConversionException e) {
             logger.error("Error converting document",e);
             streamResource = null;

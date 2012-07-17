@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Bean for creating a DocumentManager instance inside the Spring container 
+ * Spring configuration class
  * 
  * @author Ruiu Gabriel Mihai (gabriel.ruiu@mail.com)
  */
@@ -18,7 +18,7 @@ public class DocumentManagerBeanConfiguration {
     public DocumentManager documentManager(){
 
         DocumentManager documentManager = new DocumentManager();
-        documentManager.registerDocumentProvider(new StreamResourceConverter());
+        documentManager.registerDocumentConverter(new StreamResourceConverter());
         return documentManager;
     }
 }

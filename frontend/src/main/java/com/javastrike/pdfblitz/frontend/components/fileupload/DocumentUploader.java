@@ -2,11 +2,25 @@ package com.javastrike.pdfblitz.frontend.components.fileupload;
 
 import com.javastrike.pdfblitz.manager.model.Document;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Upload;
 import com.vaadin.ui.VerticalLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * Main component that exposes the upload functionality for the application.
+ *
+ * NOTE: Because of the difficulties of developing a proper component to upload multiple files at once,
+ * I have settled, temporarily, for a component that uploads single files multiple times and shows a
+ * list of the uploaded file names.
+ *
+ * @see UploadType
+ * @see FileUploader
+ *
+ * @author  Ruiu Gabriel Mihai (gabriel.ruiu@mail.com)
+ */
 
 @SuppressWarnings("serial")
 public class DocumentUploader extends VerticalLayout implements UploadEventHandler {
@@ -61,15 +75,17 @@ public class DocumentUploader extends VerticalLayout implements UploadEventHandl
     private void initializeComponents(){
 
         fileUploader = FileUploaderFactory.getFileUploader(uploadType);
+        payload = new ArrayList<Document>();
+
+        //when each upload is finished, update the payload
         fileUploader.addListener(new Upload.SucceededListener() {
             @Override
             public void uploadSucceeded(Upload.SucceededEvent event) {
-
-                payload = new ArrayList<Document>();
                 if (uploadType == UploadType.SINGLE){
+                    payload = new ArrayList<Document>();
                     payload.add((Document)fileUploader.getPayload());
                 }
-                else{
+                else if (uploadType == UploadType.MULTIPLE) {
                     payload = (List<Document>)fileUploader.getPayload();
                 }
             }

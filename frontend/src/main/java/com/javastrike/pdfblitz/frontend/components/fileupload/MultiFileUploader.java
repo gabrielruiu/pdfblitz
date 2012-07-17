@@ -1,91 +1,99 @@
 package com.javastrike.pdfblitz.frontend.components.fileupload;
 
 import com.javastrike.pdfblitz.manager.model.Document;
+import com.vaadin.ui.ListSelect;
 import com.vaadin.ui.Upload;
-import org.vaadin.easyuploads.FileBuffer;
-import org.vaadin.easyuploads.FileFactory;
-import org.vaadin.easyuploads.MultiFileUpload;
 
-import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
+
 /**
+ * Component that handles multiple-file uploads.
+ *
+ * Essentially, its a {@link SingleFileUploader} that uploads files several times.
+ * The user has to upload every single file separately
+ *
+ * @see DocumentUploader
+ * @see UploadType
+ * @see FileUploaderFactory
+ * @see FileUploader
+ *
  * @author Ruiu Gabriel Mihai (gabriel.ruiu@mail.com)
  */
-@SuppressWarnings("serial")
-public class MultiFileUploader extends FileUploader<List<Document>>{
+public class MultiFileUploader extends FileUploader<List<Document>> {
 
+    private List<Document> payload;
+    private SingleFileUploader singleFileUploader;
+    private ListSelect listOfUploadedFiles;
 
-    private MultiFileUpload multiFileUpload;
 
     public MultiFileUploader() {
 
-        configureLayout();
         initializeComponents();
+        configureLayout();
         drawContents();
     }
 
     @Override
     public List<Document> getPayload() {
-        return null;
+        return payload;
     }
 
     @Override
     public void addListener(Upload.StartedListener startedListener) {
-
+        singleFileUploader.addListener(startedListener);
     }
 
     @Override
     public void addListener(Upload.ProgressListener progressListener) {
-
+        singleFileUploader.addListener(progressListener);
     }
 
     @Override
     public void addListener(Upload.FinishedListener finishedListener) {
-
+        singleFileUploader.addListener(finishedListener);
     }
 
     @Override
     public void addListener(Upload.FailedListener failedListener) {
-
+        singleFileUploader.addListener(failedListener);
     }
 
     @Override
     public void addListener(Upload.SucceededListener succeededListener) {
-
+        singleFileUploader.addListener(succeededListener);
     }
 
-    private void configureLayout(){
+    private void initializeComponents() {
 
-    }
+        payload = new ArrayList<Document>();
 
-    private void initializeComponents(){
+        singleFileUploader = new SingleFileUploader();
 
-    }
+        //each successful upload is inserted into the payload
+        singleFileUploader.addListener(new Upload.SucceededListener() {
+            @Override
+            public void uploadSucceeded(Upload.SucceededEvent event) {
 
-    private void drawContents(){
-
-    }
-
-    private class MultiFileUploadBuffer extends FileBuffer{
-
-        private MultiFileFactory factory;
-
-        @Override
-        public FileFactory getFileFactory() {
-
-            if (factory == null){
-                factory = new MultiFileFactory();
+                Document uploadedFile = singleFileUploader.getPayload();
+                payload.add(uploadedFile);
+                listOfUploadedFiles.addItem(uploadedFile.getName());
             }
-            return factory;
-        }
+        });
+
+        listOfUploadedFiles = new ListSelect("Uploaded files:");
+        listOfUploadedFiles.setNullSelectionAllowed(false);
+        listOfUploadedFiles.setWidth(350, UNITS_PIXELS);
     }
 
-    private class MultiFileFactory implements FileFactory{
+    private void configureLayout() {
+        setSizeUndefined();
+    }
 
-        @Override
-        public File createFile(String s, String s1) {
-            return null;
-        }
+    private void drawContents() {
+
+        addComponent(singleFileUploader);
+        addComponent(listOfUploadedFiles);
     }
 }
