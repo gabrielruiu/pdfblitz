@@ -36,23 +36,15 @@ public class PdfBlitzApplication extends TPTApplication implements ApplicationCo
         documentManager = new DocumentManager();
         setupDocumentManager();
 
-        setMainWindow(new HomePage());
+
+        Window mainWindow = new Window("PdfBlitz");
+        mainWindow.setContent(new HomePage());
+        setMainWindow(mainWindow);
     }
 
     @Override
     public void firstApplicationStartup() {
 
-    }
-
-    @Override
-    public Window getWindow(String name) {
-
-        Window requestedWindow = super.getWindow(name);
-        if (super.getWindow(name) == null){
-            requestedWindow = new Window();
-            addWindow(requestedWindow);
-        }
-        return requestedWindow;
     }
 
     //TODO: remove when DocumentManager will be injected through Spring

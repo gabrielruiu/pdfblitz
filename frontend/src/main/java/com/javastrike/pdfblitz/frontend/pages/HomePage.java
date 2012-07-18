@@ -14,16 +14,12 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class HomePage extends PdfBlitzPage {
 
-
-    public static final String PAGE_NAME = "homepage";
-
     private GridLayout layout;
     private HomePageButton singlePdfOperations;
     private HomePageButton conversionOperations;
 
     public HomePage() {
 
-        super("PdfBlitz - select an operation", PAGE_NAME);
         initializeComponents();
         configureLayout();
         drawContents();
