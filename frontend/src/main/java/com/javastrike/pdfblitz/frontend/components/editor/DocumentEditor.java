@@ -1,5 +1,6 @@
 package com.javastrike.pdfblitz.frontend.components.editor;
 
+import com.javastrike.pdfblitz.frontend.components.editor.toolbox.DocumentToolbox;
 import com.javastrike.pdfblitz.manager.model.Document;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.GridLayout;

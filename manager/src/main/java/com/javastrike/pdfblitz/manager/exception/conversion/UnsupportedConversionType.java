@@ -1,10 +1,9 @@
-package com.javastrike.pdfblitz.manager.exception;
+package com.javastrike.pdfblitz.manager.exception.conversion;
 
 /**
  * @author Ruiu Gabriel Mihai (gabriel.ruiu@mail.com)
  */
-public class UnsupportedConversionType extends Exception {
-
+public class UnsupportedConversionType extends ConversionException {
 
     public UnsupportedConversionType() {
     }

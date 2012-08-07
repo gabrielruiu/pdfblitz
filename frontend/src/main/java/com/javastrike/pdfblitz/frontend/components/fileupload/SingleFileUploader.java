@@ -201,7 +201,7 @@ public class SingleFileUploader extends FileUploader<Document>{
 
             payload = new Document();
             payload.setName(filename);
-            payload.setMIMEtype(MIMEType);
+            payload.setMimeType(MIMEType);
             return contentStream;
         }
     }

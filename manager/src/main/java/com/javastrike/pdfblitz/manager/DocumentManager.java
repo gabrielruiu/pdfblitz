@@ -1,61 +1,49 @@
 package com.javastrike.pdfblitz.manager;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import com.javastrike.pdfblitz.manager.converter.AdditionalConversionData;
-import com.javastrike.pdfblitz.manager.converter.DocumentConverter;
-import com.javastrike.pdfblitz.manager.converter.DocumentFileProvider;
-import com.javastrike.pdfblitz.manager.converter.DocumentStreamProvider;
-import com.javastrike.pdfblitz.manager.exception.ConversionException;
-import com.javastrike.pdfblitz.manager.exception.UnsupportedConversionType;
-import com.javastrike.pdfblitz.manager.model.Document;
+import com.javastrike.pdfblitz.manager.converter.management.ConverterResolver;
+import com.javastrike.pdfblitz.manager.operations.ConversionOperations;
+import com.javastrike.pdfblitz.manager.operations.ConversionSupport;
 import com.javastrike.pdfblitz.manager.operations.DocumentOperations;
+import com.javastrike.pdfblitz.manager.operations.impl.DefaultConversionSupport;
+import com.javastrike.pdfblitz.manager.operations.impl.pdfbox.PdfBoxConversionOperations;
+import com.javastrike.pdfblitz.manager.operations.impl.pdfbox.PdfBoxDocumentOperations;
 
 //TODO: UNDO functionality?
 public class DocumentManager {
 
 
     private DocumentOperations documentOperations;
-    private Set<DocumentConverter> documentConverters;
+    private ConversionOperations conversionOperations;
+
 
     public DocumentManager() {
+        this(new PdfBoxDocumentOperations(), new PdfBoxConversionOperations());
 
-        documentConverters = new HashSet<DocumentConverter>();
-        registerDefaultProviders();
     }
 
-    private void registerDefaultProviders(){
+    public DocumentManager(DocumentOperations documentOperations, ConversionOperations conversionOperations) {
 
-        registerDocumentConverter(new DocumentFileProvider());
-        registerDocumentConverter(new DocumentStreamProvider());
+        this.documentOperations = documentOperations;
+        this.conversionOperations = conversionOperations;
+
     }
 
-    public void registerDocumentConverter(DocumentConverter provider){
-        documentConverters.add(provider);
+
+
+    public DocumentOperations getDocumentOperations() {
+        return documentOperations;
     }
 
-    public void removeDocumentConverter(DocumentConverter provider){
-        documentConverters.remove(provider);
+    public void setDocumentOperations(DocumentOperations documentOperations) {
+        this.documentOperations = documentOperations;
     }
 
-    public Object convertFromDocument(Document document, Class clazz) throws ConversionException, UnsupportedConversionType{
 
-        for (DocumentConverter converter : documentConverters){
-            if (converter.supports(clazz)){
-                return converter.provideDocument(document);
-            }
-        }
-        throw new UnsupportedConversionType("Conversion into type " + clazz.getName() + " is not supported");
+    public ConversionOperations getConversionOperations() {
+        return conversionOperations;
     }
-    
-    public Document convertToDocument(Object object, AdditionalConversionData additionalData) throws ConversionException, UnsupportedConversionType {
-    	
-    	for (DocumentConverter converter : documentConverters){
-            if (converter.supports(object.getClass())){
-                return converter.convertToDocument(object, additionalData);
-            }
-        }
-        throw new UnsupportedConversionType("Conversion from type " + object.getClass().getName() + " is not supported");
+
+    public void setConversionOperations(ConversionOperations conversionOperations) {
+        this.conversionOperations = conversionOperations;
     }
 }

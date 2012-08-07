@@ -1,10 +1,11 @@
-package com.javastrike.pdfblitz.manager.exception;
+package com.javastrike.pdfblitz.manager.exception.conversion;
+
+import com.javastrike.pdfblitz.manager.exception.DocumentOperationException;
 
 /**
  * @author Ruiu Gabriel Mihai (gabriel.ruiu@mail.com)
  */
-public class ConversionException extends Exception{
-
+public class ConversionException extends DocumentOperationException {
 
     public ConversionException() {
     }

@@ -1,8 +1,8 @@
 package com.javastrike.pdfblitz.frontend.components.editor;
 
 import com.javastrike.pdfblitz.frontend.PdfBlitzApplication;
-import com.javastrike.pdfblitz.manager.exception.ConversionException;
-import com.javastrike.pdfblitz.manager.exception.UnsupportedConversionType;
+import com.javastrike.pdfblitz.manager.exception.conversion.ConversionException;
+import com.javastrike.pdfblitz.manager.exception.conversion.UnsupportedConversionType;
 import com.javastrike.pdfblitz.manager.model.Document;
 import com.vaadin.terminal.StreamResource;
 import com.vaadin.ui.Embedded;
@@ -16,6 +16,7 @@ public class DocumentPreview extends VerticalLayout {
 
     private Logger logger = Logger.getLogger(DocumentPreview.class);
     private Document document;
+
 
     public DocumentPreview(Document fileResource) {
 
@@ -43,7 +44,7 @@ public class DocumentPreview extends VerticalLayout {
 
         Embedded documentPreview = new Embedded();
         documentPreview.setSizeFull();
-        documentPreview.setMimeType(document.getMIMEtype());
+        documentPreview.setMimeType(document.getMimeType());
         documentPreview.setType(Embedded.TYPE_BROWSER);
         documentPreview.setSource(generateResourceFromDocument(document));
         addComponent(documentPreview);
@@ -58,13 +59,13 @@ public class DocumentPreview extends VerticalLayout {
 
         StreamResource streamResource;
         try {
-            streamResource = (StreamResource)((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
-                    getDocumentManager().convertFromDocument(document,StreamResource.class);
+
+            streamResource = (StreamResource)((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication())
+                    .getDocumentManager().getConversionOperations().getConverterResolver()
+                    .getConverter(Document.class,StreamResource.class).provideDocument(document,null);
+
         } catch (ConversionException e) {
             logger.error("Error converting document",e);
-            streamResource = null;
-        } catch (UnsupportedConversionType unsupportedConversionType) {
-            logger.error("Error converting document", unsupportedConversionType);
             streamResource = null;
         }
         return streamResource;

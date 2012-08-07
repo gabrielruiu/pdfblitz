@@ -4,7 +4,7 @@
 
 
     <servlet>
-        <servlet-name>Pdf Workshop</servlet-name>
+        <servlet-name>Pdf Blitz</servlet-name>
         <servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
         <init-param>
             <param-name>application</param-name>
@@ -12,12 +12,14 @@
         </init-param>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Pdf Workshop</servlet-name>
+        <servlet-name>Pdf Blitz</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
 
+
+    <!-- Let Spring know when new sessions are started -->
     <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
     </listener>
 
     <context-param>
@@ -25,16 +27,15 @@
         <param-value>classpath*:applicationContext.xml</param-value>
     </context-param>
 
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
     <!--Should be enabled when in production mode-->
     <!--<context-param>
-        <description>Vaadin production mode</description>
-        <param-name>productionMode</param-name>
-        <param-value>true</param-value>
-    </context-param>-->
+    <description>Vaadin production mode</description>
+    <param-name>productionMode</param-name>
+    <param-value>true</param-value>
+</context-param>-->
 
-    <!-- Let Spring know when new sessions are started -->
-    <listener>
-        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
-    </listener>
 
 </web-app>

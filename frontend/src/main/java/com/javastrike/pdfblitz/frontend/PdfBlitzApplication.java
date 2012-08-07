@@ -1,7 +1,7 @@
 package com.javastrike.pdfblitz.frontend;
 
 import com.javastrike.pdfblitz.frontend.pages.HomePage;
-import com.javastrike.pdfblitz.frontend.provider.StreamResourceConverter;
+import com.javastrike.pdfblitz.frontend.document.provider.StreamResourceConverter;
 import com.javastrike.pdfblitz.frontend.theme.PdfBlitzTheme;
 import com.javastrike.pdfblitz.manager.DocumentManager;
 import com.vaadin.service.ApplicationContext;
@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 
 @Configurable
 public class PdfBlitzApplication extends TPTApplication implements ApplicationContext.TransactionListener{
+
 
     //TODO: inject using Spring
     private DocumentManager documentManager;
@@ -51,6 +52,7 @@ public class PdfBlitzApplication extends TPTApplication implements ApplicationCo
     private void setupDocumentManager(){
 
         documentManager = new DocumentManager();
-        documentManager.registerDocumentConverter(new StreamResourceConverter());
+        documentManager.getConversionOperations().getConverterResolver()
+                .getConverterRegistry().registerDocumentConverter((new StreamResourceConverter()));
     }
 }
