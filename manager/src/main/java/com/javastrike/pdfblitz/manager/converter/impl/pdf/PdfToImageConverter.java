@@ -12,10 +12,10 @@ import com.javastrike.pdfblitz.manager.exception.conversion.ConversionException;
 import com.javastrike.pdfblitz.manager.model.Document;
 import com.javastrike.pdfblitz.manager.model.ImageDocument;
 import com.javastrike.pdfblitz.manager.model.PdfDocument;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.common.PDStream;
 import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.graphics.xobject.PDJpeg;
 import org.apache.pdfbox.pdmodel.graphics.xobject.PDXObjectImage;
@@ -78,7 +78,9 @@ public class PdfToImageConverter implements PdfConverter<List<ImageDocument>> {
                 PDPage page = new PDPage();
 
                 pdDocument.addPage(page);
-                PDXObjectImage xImage = new PDJpeg(pdDocument, new ByteArrayInputStream(image.getContent()));
+                ByteArrayInputStream bis = new ByteArrayInputStream(image.getContent());
+                PDXObjectImage xImage = new PDJpeg(pdDocument, bis);
+                IOUtils.closeQuietly(bis);
 
                 PDPageContentStream contentStream = new PDPageContentStream(pdDocument, page);
                 contentStream.drawImage( xImage, 0, 0 );

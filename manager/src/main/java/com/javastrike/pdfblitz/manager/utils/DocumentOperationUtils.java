@@ -1,6 +1,6 @@
 package com.javastrike.pdfblitz.manager.utils;
 
-import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.commons.collections.primitives.ArrayIntList;
 
 import java.util.Arrays;
 
@@ -29,6 +29,19 @@ public abstract class DocumentOperationUtils {
         Arrays.sort(pageIndices);
     }
 
+    public static int[] removeDuplicateIntegerEntries(int[] integers) {
+
+        ArrayIntList noDuplicateIntegers = new ArrayIntList();
+
+        for (int value : integers) {
+            if (! noDuplicateIntegers.contains(value)) {
+                noDuplicateIntegers.add(value);
+            }
+        }
+
+        return noDuplicateIntegers.toArray();
+    }
+
     public static boolean prepareAndCheckPageIndices(int totalNumberOfPages, int... pageIndices) {
 
         //check if any of the indices is out of range
@@ -38,6 +51,11 @@ public abstract class DocumentOperationUtils {
 
         //order the pageIndices to be in ascending order
         DocumentOperationUtils.orderIndicesAscending(pageIndices);
+
+
+        //remove any integer values that appear more than once
+        pageIndices = removeDuplicateIntegerEntries(pageIndices);
+
         return true;
     }
 }

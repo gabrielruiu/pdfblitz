@@ -9,6 +9,8 @@ public class PdfBlitzTheme {
         return THEME_NAME.toLowerCase();
     }
 
+
+    public static final String BUTTON_OPERATION = "operation";
     public static final String BUTTON_HOMEPAGE = "homepage";
     public static final String BUTTON_HOMEPAGE_LEFT = "homepage-left";
     public static final String BUTTON_HOMEPAGE_RIGHT = "homepage-right";

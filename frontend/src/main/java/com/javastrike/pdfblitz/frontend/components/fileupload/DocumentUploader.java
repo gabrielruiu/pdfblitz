@@ -2,7 +2,6 @@ package com.javastrike.pdfblitz.frontend.components.fileupload;
 
 import com.javastrike.pdfblitz.manager.model.Document;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Upload;
 import com.vaadin.ui.VerticalLayout;
 
@@ -39,6 +38,10 @@ public class DocumentUploader extends VerticalLayout implements UploadEventHandl
 
     public List<Document> getPayload(){
         return payload;
+    }
+
+    public void resetPayload() {
+        payload = new ArrayList<Document>();
     }
 
     @Override

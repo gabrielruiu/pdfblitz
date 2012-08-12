@@ -1,16 +1,18 @@
 package com.javastrike.pdfblitz.manager.converter.impl.document;
 
-import java.io.File;
-import java.io.IOException;
-
-import com.javastrike.pdfblitz.manager.converter.management.ConversionContext;
 import com.javastrike.pdfblitz.manager.converter.Converter;
+import com.javastrike.pdfblitz.manager.converter.management.ConversionContext;
 import com.javastrike.pdfblitz.manager.converter.management.IdentifierType;
-import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
-
 import com.javastrike.pdfblitz.manager.exception.conversion.ConversionException;
 import com.javastrike.pdfblitz.manager.model.Document;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * Handles conversion of a Document to and from java.io.File
@@ -33,12 +35,18 @@ public class DocumentFileConverter implements Converter<File, Document> {
         return Document.class.isAssignableFrom(documentType);
     }
 
+    //TODO: change document location to point to a specified folder
     @Override
     public File provideDocument(Document document, ConversionContext context) throws ConversionException{
 
         documentLocation = null;
         try {
-            documentLocation = File.createTempFile("document-",null);
+
+            documentLocation = new File(document.getName());
+            FileOutputStream fos = new FileOutputStream(documentLocation);
+            IOUtils.copy(new ByteArrayInputStream(document.getContent()),fos);
+            IOUtils.closeQuietly(fos);
+
         } catch (IOException e) {
             logger.error("Error creating temporary file for document",e);
             throw new ConversionException("Error creating temporary file for document",e);

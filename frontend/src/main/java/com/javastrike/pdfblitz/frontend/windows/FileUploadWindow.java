@@ -1,9 +1,7 @@
 package com.javastrike.pdfblitz.frontend.windows;
 
 import com.javastrike.pdfblitz.frontend.components.fileupload.DocumentUploader;
-import com.javastrike.pdfblitz.frontend.components.fileupload.UploadEventHandler;
 import com.javastrike.pdfblitz.frontend.components.fileupload.UploadType;
-import com.javastrike.pdfblitz.frontend.pages.DocumentEditorPage;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Upload;
@@ -64,6 +62,8 @@ public class FileUploadWindow extends Window{
     private void initializeComponents(){
 
         documentUploader = new DocumentUploader(uploadType);
+
+        documentUploader.resetPayload();
 
         if (uploadType == UploadType.MULTIPLE) {
 

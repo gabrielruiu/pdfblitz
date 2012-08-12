@@ -27,6 +27,14 @@
   text-align: center !important;
 }
 
+.v-button-operation {
+    background: #fff;
+}
+
+.v-button-operation>.v-button-caption [
+    margin: 30px;
+}
+
 
 
 

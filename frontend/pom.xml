@@ -18,6 +18,12 @@
 
     <name>PdfBlitz :: Frontend</name>
 
+
+    <properties>
+        <finalName>pdfblitz</finalName>
+        <context>/${finalName}</context>
+    </properties>
+
     <dependencies>
 
 
@@ -94,6 +100,28 @@
             <version>${spring.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>commons-primitives</groupId>
+            <artifactId>commons-primitives</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+            <version>1.4.1</version>
+        </dependency>
+
+
+
+        <!--  TESTING   -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.7</version>
+        </dependency>
+
+
 
     </dependencies>
 
@@ -101,6 +129,19 @@
 
     <build>
         <finalName>pdfblitz</finalName>
+
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>tomcat-maven-plugin</artifactId>
+                <configuration>
+                    <warFile>${pdfblitz.warLocation}</warFile>
+                    <server>${tomcat.server}</server>
+                    <url>${tomcat.url}</url>
+                    <path>${context}</path>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 
 
@@ -124,5 +165,5 @@
             <url>http://maven.vaadin.com/vaadin-addons</url>
         </repository>
     </repositories>
-    
+
 </project>

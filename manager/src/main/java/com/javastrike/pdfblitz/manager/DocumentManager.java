@@ -1,10 +1,7 @@
 package com.javastrike.pdfblitz.manager;
 
-import com.javastrike.pdfblitz.manager.converter.management.ConverterResolver;
 import com.javastrike.pdfblitz.manager.operations.ConversionOperations;
-import com.javastrike.pdfblitz.manager.operations.ConversionSupport;
-import com.javastrike.pdfblitz.manager.operations.DocumentOperations;
-import com.javastrike.pdfblitz.manager.operations.impl.DefaultConversionSupport;
+import com.javastrike.pdfblitz.manager.operations.PdfDocumentOperations;
 import com.javastrike.pdfblitz.manager.operations.impl.pdfbox.PdfBoxConversionOperations;
 import com.javastrike.pdfblitz.manager.operations.impl.pdfbox.PdfBoxDocumentOperations;
 
@@ -12,7 +9,7 @@ import com.javastrike.pdfblitz.manager.operations.impl.pdfbox.PdfBoxDocumentOper
 public class DocumentManager {
 
 
-    private DocumentOperations documentOperations;
+    private PdfDocumentOperations documentOperations;
     private ConversionOperations conversionOperations;
 
 
@@ -21,7 +18,7 @@ public class DocumentManager {
 
     }
 
-    public DocumentManager(DocumentOperations documentOperations, ConversionOperations conversionOperations) {
+    public DocumentManager(PdfDocumentOperations documentOperations, ConversionOperations conversionOperations) {
 
         this.documentOperations = documentOperations;
         this.conversionOperations = conversionOperations;
@@ -30,11 +27,11 @@ public class DocumentManager {
 
 
 
-    public DocumentOperations getDocumentOperations() {
+    public PdfDocumentOperations getDocumentOperations() {
         return documentOperations;
     }
 
-    public void setDocumentOperations(DocumentOperations documentOperations) {
+    public void setDocumentOperations(PdfDocumentOperations documentOperations) {
         this.documentOperations = documentOperations;
     }
 

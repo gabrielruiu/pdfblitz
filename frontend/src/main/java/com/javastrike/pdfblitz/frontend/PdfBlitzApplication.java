@@ -1,6 +1,6 @@
 package com.javastrike.pdfblitz.frontend;
 
-import com.javastrike.pdfblitz.frontend.pages.HomePage;
+import com.javastrike.pdfblitz.frontend.components.editor.DocumentToolbox;
 import com.javastrike.pdfblitz.frontend.document.provider.StreamResourceConverter;
 import com.javastrike.pdfblitz.frontend.theme.PdfBlitzTheme;
 import com.javastrike.pdfblitz.manager.DocumentManager;
@@ -39,7 +39,8 @@ public class PdfBlitzApplication extends TPTApplication implements ApplicationCo
 
 
         Window mainWindow = new Window("PdfBlitz");
-        mainWindow.setContent(new HomePage());
+        mainWindow.setContent(new DocumentToolbox());
+        /*mainWindow.setContent(new TestLayout());*/
         setMainWindow(mainWindow);
     }
 
