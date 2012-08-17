@@ -1,6 +1,9 @@
 package com.javastrike.pdfblitz.frontend.utils;
 
+import com.javastrike.pdfblitz.frontend.exception.InvalidPageIndices;
 import org.apache.commons.collections.primitives.ArrayIntList;
+
+import java.util.regex.PatternSyntaxException;
 
 /**
  * @author Ruiu Gabriel Mihai (gabriel.ruiu@mail.com)
@@ -14,24 +17,32 @@ public abstract class IntegerExpressionProcessor {
 
     //splitting the string from the "-" character means that negative numbers will not
     //be processed correctly and will return a runtime exception
-    public static int[] processIntegerExpression(String integerExpression) {
+    public static int[] processIntegerExpression(String integerExpression) throws InvalidPageIndices{
 
         ArrayIntList integers = new ArrayIntList();
-        String[] parts = integerExpression.split(",");
 
-        for (String part : parts) {
+        try {
+            String[] parts = integerExpression.split(",");
 
-            if (part.contains("-")) {
-                String[] startAndEndIndices = part.split("-");
-                int startIndex = Integer.parseInt(startAndEndIndices[0]);
-                int endIndex = Integer.parseInt(startAndEndIndices[1]);
+            for (String part : parts) {
 
-                for (int index : generateFullIntegerRange(startIndex,endIndex)) {
-                    integers.add(index);
+                if (part.contains("-")) {
+                    String[] startAndEndIndices = part.split("-");
+                    int startIndex = Integer.parseInt(startAndEndIndices[0]);
+                    int endIndex = Integer.parseInt(startAndEndIndices[1]);
+
+                    for (int index : generateFullIntegerRange(startIndex,endIndex)) {
+                        integers.add(index);
+                    }
+                } else {
+                    integers.add(Integer.parseInt(part));
                 }
-            } else {
-                integers.add(Integer.parseInt(part));
             }
+
+        } catch (PatternSyntaxException e) {
+            throw new InvalidPageIndices("Page indices expression is invalid", e);
+        } catch (NumberFormatException e) {
+            throw new InvalidPageIndices("Page indices expression is invalid", e);
         }
 
         return integers.toArray();

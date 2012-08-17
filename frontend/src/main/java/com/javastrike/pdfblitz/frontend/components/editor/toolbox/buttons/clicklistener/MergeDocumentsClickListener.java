@@ -5,6 +5,7 @@ import com.javastrike.pdfblitz.manager.converter.impl.DefaultConversionContext;
 import com.javastrike.pdfblitz.manager.converter.impl.StringConversionParameter;
 import com.javastrike.pdfblitz.manager.converter.management.ConversionContext;
 import com.javastrike.pdfblitz.manager.converter.management.IdentifierType;
+import com.javastrike.pdfblitz.manager.exception.DocumentOperationException;
 import com.javastrike.pdfblitz.manager.exception.pdfoperations.PdfDocumentOperationException;
 import com.javastrike.pdfblitz.manager.model.Document;
 import com.javastrike.pdfblitz.manager.model.PdfDocument;
@@ -26,22 +27,23 @@ public class MergeDocumentsClickListener extends DocumentOperationButtonClickLis
     }
 
     @Override
-    protected List<? extends Document> performOperationOnFiles(List<? extends Document> documents) {
+    protected List<? extends Document> performOperationOnFiles(List<? extends Document> documents)
+        throws DocumentOperationException {
 
+        List<PdfDocument> pdfDocuments;
         try {
             ConversionContext context = new DefaultConversionContext().
                     addConversionParameter(IdentifierType.DOCUMENT_NAME, new StringConversionParameter("merged_documents.pdf")).
                     addConversionParameter(IdentifierType.MIME_TYPE, new StringConversionParameter("application/pdf"));
 
-            List<PdfDocument> pdfDocuments = new ArrayList<PdfDocument>();
+            pdfDocuments = new ArrayList<PdfDocument>();
             pdfDocuments.add(getPdfDocumentOperations().mergeDocuments(context, convertDocumentsToPdfs(documents)));
-
-            return pdfDocuments;
 
         } catch (PdfDocumentOperationException e) {
             LOG.error("Error merging documents",e);
+            throw new DocumentOperationException("Error merging documents", e);
         }
-        return null;
+        return pdfDocuments;
     }
 
     @Override

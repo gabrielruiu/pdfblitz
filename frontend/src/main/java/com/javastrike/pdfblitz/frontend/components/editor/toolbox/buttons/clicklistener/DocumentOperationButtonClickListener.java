@@ -6,7 +6,12 @@ import com.javastrike.pdfblitz.frontend.document.FileDownloadResource;
 import com.javastrike.pdfblitz.frontend.utils.ArchiveUtils;
 import com.javastrike.pdfblitz.frontend.windows.FileUploadWindow;
 import com.javastrike.pdfblitz.frontend.zip.DocumentToFileArchiver;
-import com.javastrike.pdfblitz.frontend.zip.exception.CompressionException;
+import com.javastrike.pdfblitz.frontend.zip.exception.ArchivingException;
+import com.javastrike.pdfblitz.manager.exception.DocumentOperationException;
+import com.javastrike.pdfblitz.manager.exception.conversion.ConversionException;
+import com.javastrike.pdfblitz.manager.exception.pdfoperations.EncryptedException;
+import com.javastrike.pdfblitz.manager.exception.pdfoperations.PageIndicesOutOfRangeException;
+import com.javastrike.pdfblitz.manager.exception.pdfoperations.PdfDocumentOperationException;
 import com.javastrike.pdfblitz.manager.model.Document;
 import com.javastrike.pdfblitz.manager.operations.ConversionOperations;
 import com.javastrike.pdfblitz.manager.operations.PdfDocumentOperations;
@@ -108,7 +113,8 @@ public abstract class DocumentOperationButtonClickListener implements Button.Cli
                 new OperationWindow());
     }
 
-    protected abstract List<? extends Document> performOperationOnFiles(List<? extends Document> documents);
+    protected abstract List<? extends Document> performOperationOnFiles(List<? extends Document> documents)
+            throws DocumentOperationException;
 
     protected abstract Layout getOperationInterface();
 
@@ -130,13 +136,43 @@ public abstract class DocumentOperationButtonClickListener implements Button.Cli
 
     private void processFiles() {
 
-        List<? extends Document> modifiedDocuments = performOperationOnFiles(filesDownloaded);
-        archiveModifiedFilesAndSendForDownload(modifiedDocuments);
+        List<? extends Document> modifiedDocuments = null;
+        try {
+            modifiedDocuments = performOperationOnFiles(filesDownloaded);
+            archiveModifiedFilesAndSendForDownload(modifiedDocuments);
+        } catch (DocumentOperationException e) {
+            showError(e);
+        }
+    }
+
+    //TODO: move to PdfBlitzApplication?
+    private void showError(DocumentOperationException operationException) {
+
+        String errorMessage = "Unknown error occured";
+        if (operationException instanceof ArchivingException){
+            errorMessage = "An error has occured while archiving the documents";
+        }
+        if (operationException instanceof PdfDocumentOperationException) {
+            errorMessage = "Error while performing the operation on the documents";
+        }
+        if (operationException instanceof ConversionException) {
+            errorMessage = "Error performing conversion operation";
+        }
+        if (operationException instanceof EncryptedException){
+            errorMessage = "Document is encrypted, must be decrypted before use";
+        }
+        if (operationException instanceof PageIndicesOutOfRangeException) {
+            errorMessage = "The page indices are invalid (eg. out of range, invalid expression";
+        }
+
+        PdfBlitzApplication.getCurrentApplication().getMainWindow()
+                .showNotification(errorMessage, Window.Notification.TYPE_ERROR_MESSAGE);
     }
 
 
     //TODO: show error notifications
-    private void archiveModifiedFilesAndSendForDownload(List<? extends Document> modifiedDocuments) {
+    private void archiveModifiedFilesAndSendForDownload(List<? extends Document> modifiedDocuments)
+            throws DocumentOperationException {
 
         //TODO: get from ArchiveUtils.generateFullPathForArchive()
         //TODO: dont use "\\" character
@@ -149,17 +185,17 @@ public abstract class DocumentOperationButtonClickListener implements Button.Cli
 
         try {
             new DocumentToFileArchiver().archive(modifiedDocuments,new FileOutputStream(archiveFile));
-            ((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).getMainWindow().open(
+            PdfBlitzApplication.getCurrentApplication().getMainWindow().open(
                     new FileDownloadResource(archiveFile,PdfBlitzApplication.getCurrentApplication()));
 
 
 
         } catch (FileNotFoundException e) {
             LOG.error("Error archiving documents", e);
-            /*showNotification("Error archiving documents", Window.Notification.TYPE_ERROR_MESSAGE);*/
-        } catch (CompressionException e) {
+            throw new ArchivingException("Error archiving documents",e);
+        } catch (ArchivingException e) {
             LOG.error("Error archiving documents", e);
-            /*showNotification("Error archiving documents", Window.Notification.TYPE_ERROR_MESSAGE);*/
+            throw new ArchivingException("Error archiving documents", e);
         }
     }
 
@@ -181,8 +217,7 @@ public abstract class DocumentOperationButtonClickListener implements Button.Cli
                 public void buttonClick(Button.ClickEvent event) {
 
                     processFiles();
-                    ((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).getMainWindow().
-                            removeWindow(OperationWindow.this);
+                    PdfBlitzApplication.getCurrentApplication().getMainWindow().removeWindow(OperationWindow.this);
                 }
             }));
         }

@@ -2,9 +2,9 @@ package com.javastrike.pdfblitz.manager.operations;
 
 import com.javastrike.pdfblitz.manager.converter.management.ConversionContext;
 import com.javastrike.pdfblitz.manager.exception.conversion.ConversionException;
-import com.javastrike.pdfblitz.manager.exception.pdfoperations.PdfDocumentOperationException;
 import com.javastrike.pdfblitz.manager.model.ImageDocument;
 import com.javastrike.pdfblitz.manager.model.PdfDocument;
+import com.javastrike.pdfblitz.manager.model.TextDocument;
 
 import java.util.List;
 
@@ -23,5 +23,8 @@ public interface ConversionOperations extends ConversionSupport {
             throws ConversionException;
 
     PdfDocument convertImagesToPdfDocument(List<ImageDocument> images, ConversionContext context)
+            throws ConversionException;
+
+    PdfDocument convertTextToPdfDocument(TextDocument textDocument, ConversionContext context)
             throws ConversionException;
 }

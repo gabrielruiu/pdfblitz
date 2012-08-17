@@ -1,6 +1,6 @@
 package com.javastrike.pdfblitz.frontend.zip;
 
-import com.javastrike.pdfblitz.frontend.zip.exception.CompressionException;
+import com.javastrike.pdfblitz.frontend.zip.exception.ArchivingException;
 import com.javastrike.pdfblitz.manager.converter.impl.document.DocumentFileConverter;
 import com.javastrike.pdfblitz.manager.exception.conversion.ConversionException;
 import com.javastrike.pdfblitz.manager.model.Document;
@@ -20,7 +20,8 @@ public class DocumentToFileArchiver /*implements ZipArchiver<Document>*/ {
     private static final Logger LOG = Logger.getLogger(DocumentToFileArchiver.class);
 
 
-    public void archive(List<? extends Document> archiveEntries, OutputStream outputStream) throws CompressionException {
+    public void archive(List<? extends Document> archiveEntries, OutputStream outputStream)
+            throws ArchivingException {
 
         try {
 
@@ -29,7 +30,7 @@ public class DocumentToFileArchiver /*implements ZipArchiver<Document>*/ {
 
         } catch (ConversionException e) {
             LOG.error("Error compressing into zip archive", e);
-            throw new CompressionException("Error compressing into zip archive",e);
+            throw new ArchivingException("Error compressing into zip archive",e);
         }
     }
 

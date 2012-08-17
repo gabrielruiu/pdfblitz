@@ -1,5 +1,6 @@
 package com.javastrike.pdfblitz.test.utils;
 
+import com.javastrike.pdfblitz.frontend.exception.InvalidPageIndices;
 import com.javastrike.pdfblitz.frontend.utils.IntegerExpressionProcessor;
 import org.testng.annotations.Test;
 
@@ -13,7 +14,7 @@ public class IntegerExpressionProcessorTest {
 
 
     @Test
-    public void integerExpressionProcessorTest1() {
+    public void integerExpressionProcessorTest1() throws InvalidPageIndices{
 
         String integerExpression = "1,4,5,7,8-10";
         int[] expectedArray = {1, 4, 5, 7 ,8 ,9 , 10};

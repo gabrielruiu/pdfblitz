@@ -1,15 +1,15 @@
 package com.javastrike.pdfblitz.frontend.components.editor.toolbox.buttons.clicklistener;
 
+import com.javastrike.pdfblitz.frontend.PdfBlitzApplication;
 import com.javastrike.pdfblitz.frontend.components.fileupload.UploadType;
+import com.javastrike.pdfblitz.frontend.exception.InvalidPageIndices;
 import com.javastrike.pdfblitz.frontend.utils.IntegerExpressionProcessor;
+import com.javastrike.pdfblitz.manager.exception.DocumentOperationException;
 import com.javastrike.pdfblitz.manager.exception.pdfoperations.PdfDocumentOperationException;
 import com.javastrike.pdfblitz.manager.model.Document;
 import com.javastrike.pdfblitz.manager.model.PdfDocument;
 import com.vaadin.data.Property;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Layout;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 import org.apache.log4j.Logger;
 
 import java.util.List;
@@ -29,18 +29,22 @@ public class SplitPagesClickListener extends DocumentOperationButtonClickListene
     }
 
     @Override
-    protected List<? extends Document> performOperationOnFiles(List<? extends Document> documents) {
+    protected List<? extends Document> performOperationOnFiles(List<? extends Document> documents)
+        throws DocumentOperationException{
 
-        PdfDocument pdfDocument = new PdfDocument(documents.get(0).getContent(),
-                documents.get(0).getName(),documents.get(0).getMimeType());
+        List<PdfDocument> pdfDocuments;
 
         try {
-            return getPdfDocumentOperations().splitAtPages(pdfDocument, pageIndices);
+
+            PdfDocument pdfDocument = new PdfDocument(documents.get(0).getContent(),
+                    documents.get(0).getName(),documents.get(0).getMimeType());
+            pdfDocuments = getPdfDocumentOperations().splitAtPages(pdfDocument, pageIndices);
 
         } catch (PdfDocumentOperationException e) {
             LOG.error("Error splitting pages",e);
+            throw new DocumentOperationException("Error splitting pages", e);
         }
-        return null;
+        return pdfDocuments;
     }
 
     @Override
@@ -60,8 +64,14 @@ public class SplitPagesClickListener extends DocumentOperationButtonClickListene
             public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
 
                 if (!valueChangeEvent.getProperty().toString().isEmpty()){
-                    pageIndices = IntegerExpressionProcessor
-                            .processIntegerExpression(valueChangeEvent.getProperty().toString());
+                    try {
+                        pageIndices = IntegerExpressionProcessor
+                                .processIntegerExpression(valueChangeEvent.getProperty().toString());
+                    } catch (InvalidPageIndices invalidPageIndices) {
+                        PdfBlitzApplication.getCurrentApplication().getMainWindow()
+                                .showNotification("The page indices expression is invalid",
+                                        Window.Notification.TYPE_ERROR_MESSAGE);
+                    }
                 }
             }
         });

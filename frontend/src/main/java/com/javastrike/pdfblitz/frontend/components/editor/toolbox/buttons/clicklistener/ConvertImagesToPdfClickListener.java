@@ -5,6 +5,7 @@ import com.javastrike.pdfblitz.manager.converter.impl.DefaultConversionContext;
 import com.javastrike.pdfblitz.manager.converter.impl.StringConversionParameter;
 import com.javastrike.pdfblitz.manager.converter.management.ConversionContext;
 import com.javastrike.pdfblitz.manager.converter.management.IdentifierType;
+import com.javastrike.pdfblitz.manager.exception.DocumentOperationException;
 import com.javastrike.pdfblitz.manager.exception.conversion.ConversionException;
 import com.javastrike.pdfblitz.manager.model.Document;
 import com.javastrike.pdfblitz.manager.model.ImageDocument;
@@ -28,8 +29,10 @@ public class ConvertImagesToPdfClickListener extends DocumentOperationButtonClic
     }
 
     @Override
-    protected List<? extends Document> performOperationOnFiles(List<? extends Document> documents) {
+    protected List<? extends Document> performOperationOnFiles(List<? extends Document> documents)
+        throws DocumentOperationException{
 
+        List<PdfDocument> pdfDocuments;
         try {
 
             ConversionContext context = new DefaultConversionContext().
@@ -39,15 +42,14 @@ public class ConvertImagesToPdfClickListener extends DocumentOperationButtonClic
 
             List<ImageDocument> imageDocuments = convertDocumentsToImages(documents);
 
-            List<PdfDocument> pdfDocuments = new ArrayList<PdfDocument>();
+            pdfDocuments = new ArrayList<PdfDocument>();
             pdfDocuments.add(getConversionOperations().convertImagesToPdfDocument(imageDocuments,context));
-
-            return pdfDocuments;
 
         } catch (ConversionException e) {
             LOG.error("Error converting images into pdf documents",e);
+            throw new DocumentOperationException("Error converting images into pdf documents", e);
         }
-        return null;
+        return pdfDocuments;
     }
 
     @Override

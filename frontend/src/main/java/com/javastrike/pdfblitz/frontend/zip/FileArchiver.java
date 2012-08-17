@@ -1,6 +1,6 @@
 package com.javastrike.pdfblitz.frontend.zip;
 
-import com.javastrike.pdfblitz.frontend.zip.exception.CompressionException;
+import com.javastrike.pdfblitz.frontend.zip.exception.ArchivingException;
 import org.apache.commons.compress.archivers.ArchiveException;
 import org.apache.commons.compress.archivers.ArchiveOutputStream;
 import org.apache.commons.compress.archivers.ArchiveStreamFactory;
@@ -24,11 +24,11 @@ public class FileArchiver implements ZipArchiver<File> {
 
 
     @Override
-    public void archive(List<File> archiveEntries, OutputStream outputStream) throws CompressionException {
+    public void archive(List<File> archiveEntries, OutputStream outputStream) throws ArchivingException {
 
         try {
             ArchiveOutputStream archiveStream = new ArchiveStreamFactory().
-                    createArchiveOutputStream(ZipArchiver.ARCHIVE_NAME, outputStream);
+                    createArchiveOutputStream(ZipArchiver.ARCHIVE_EXTENSION, outputStream);
 
             for (File file : archiveEntries) {
 
@@ -45,10 +45,10 @@ public class FileArchiver implements ZipArchiver<File> {
 
         } catch (ArchiveException e) {
             LOG.error("Error compressing into zip archive", e);
-            throw new CompressionException("Error compressing into zip archive",e);
+            throw new ArchivingException("Error compressing into zip archive",e);
         } catch (IOException e) {
             LOG.error("Error compressing into zip archive", e);
-            throw new CompressionException("Error compressing into zip archive",e);
+            throw new ArchivingException("Error compressing into zip archive",e);
         }
     }
 }

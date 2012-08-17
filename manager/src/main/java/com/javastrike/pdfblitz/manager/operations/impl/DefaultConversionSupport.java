@@ -7,6 +7,7 @@ import com.javastrike.pdfblitz.manager.converter.impl.document.DocumentStringCon
 import com.javastrike.pdfblitz.manager.converter.impl.pdf.PdfToImageConverter;
 import com.javastrike.pdfblitz.manager.converter.impl.pdfbox.ImageToPDDConverter;
 import com.javastrike.pdfblitz.manager.converter.impl.pdfbox.PdfToPDDConverter;
+import com.javastrike.pdfblitz.manager.converter.impl.pdfbox.TextToPdfConverter;
 import com.javastrike.pdfblitz.manager.converter.management.ConverterResolver;
 import com.javastrike.pdfblitz.manager.operations.ConversionSupport;
 
@@ -41,6 +42,7 @@ public class DefaultConversionSupport implements ConversionSupport {
         //PdfDocument converters
         converterResolver.getConverterRegistry().registerDocumentConverter(new PdfToImageConverter());
         converterResolver.getConverterRegistry().registerDocumentConverter(new PdfToPDDConverter());
+        converterResolver.getConverterRegistry().registerDocumentConverter(new TextToPdfConverter());
     }
 
     private void registerPdfBoxSpecificConverters() {

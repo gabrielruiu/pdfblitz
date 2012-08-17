@@ -1,6 +1,7 @@
 package com.javastrike.pdfblitz.frontend.components.editor.toolbox.buttons.clicklistener;
 
 import com.javastrike.pdfblitz.frontend.components.fileupload.UploadType;
+import com.javastrike.pdfblitz.manager.exception.DocumentOperationException;
 import com.javastrike.pdfblitz.manager.exception.conversion.ConversionException;
 import com.javastrike.pdfblitz.manager.model.Document;
 import com.javastrike.pdfblitz.manager.model.ImageDocument;
@@ -23,19 +24,23 @@ public class ConvertPdfToImagesClickListener extends DocumentOperationButtonClic
     }
 
     @Override
-    protected List<? extends Document> performOperationOnFiles(List<? extends Document> documents) {
+    protected List<? extends Document> performOperationOnFiles(List<? extends Document> documents)
+        throws DocumentOperationException{
 
+
+        List<ImageDocument> imageDocuments;
         try {
-            List<ImageDocument> imageDocuments = new ArrayList<ImageDocument>();
+            imageDocuments = new ArrayList<ImageDocument>();
             imageDocuments.addAll(getConversionOperations().convertDocumentToImages(
                     convertDocumentToPdf(documents.get(0))));
 
-            return imageDocuments;
+
 
         } catch (ConversionException e) {
             LOG.error("Error converting images into pdf documents",e);
+            throw new DocumentOperationException("Error converting images into pdf documents", e);
         }
-        return null;
+        return imageDocuments;
     }
 
     @Override

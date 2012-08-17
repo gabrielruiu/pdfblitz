@@ -4,12 +4,14 @@ import com.javastrike.pdfblitz.manager.converter.impl.DefaultConversionContext;
 import com.javastrike.pdfblitz.manager.converter.impl.IntegerArrayConversionParameter;
 import com.javastrike.pdfblitz.manager.converter.impl.StringConversionParameter;
 import com.javastrike.pdfblitz.manager.converter.impl.pdf.PdfToImageConverter;
+import com.javastrike.pdfblitz.manager.converter.impl.pdfbox.TextToPdfConverter;
 import com.javastrike.pdfblitz.manager.converter.management.ConversionContext;
 import com.javastrike.pdfblitz.manager.converter.management.ConverterResolver;
 import com.javastrike.pdfblitz.manager.converter.management.IdentifierType;
 import com.javastrike.pdfblitz.manager.exception.conversion.ConversionException;
 import com.javastrike.pdfblitz.manager.model.ImageDocument;
 import com.javastrike.pdfblitz.manager.model.PdfDocument;
+import com.javastrike.pdfblitz.manager.model.TextDocument;
 import com.javastrike.pdfblitz.manager.operations.ConversionOperations;
 import com.javastrike.pdfblitz.manager.operations.ConversionSupport;
 import com.javastrike.pdfblitz.manager.operations.impl.DefaultConversionSupport;
@@ -117,6 +119,13 @@ public class PdfBoxConversionOperations implements ConversionOperations {
         return pdfDocument;
     }
 
+    @Override
+    public PdfDocument convertTextToPdfDocument(TextDocument textDocument, ConversionContext context) throws ConversionException {
+
+        TextToPdfConverter converter = new TextToPdfConverter();
+        return converter.convertToDocument(textDocument, null);
+
+    }
 
     private int[] generateIntegerArrayFromNumberInterval(int startIndex, int endIndex){
 

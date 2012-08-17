@@ -17,21 +17,22 @@ public class DocumentToolbox extends GridLayout {
 
     private void configureLayout() {
 
-        setColumns(3);
+        setColumns(2);
         setSizeFull();
         setSpacing(true);
-        setHeight(800, UNITS_PIXELS);
+        setHeight(1000, UNITS_PIXELS);
     }
 
 
     private void drawContents() {
 
+    	addButton(new ConvertImagesToPdfButton());
+    	addButton(new ConvertPdfToImagesButton());
+    	addButton(new ExtractPagesButton());
+    	addButton(new MergeDocumentsButton());
         addButton(new SplitPagesButton());
         addButton(new DeletePagesButton());
-        addButton(new ExtractPagesButton());
-        addButton(new MergeDocumentsButton());
-        addButton(new ConvertPdfToImagesButton());
-        addButton(new ConvertImagesToPdfButton());
+        addButton(new ConvertTextToPdfButton());
     }
 
     private void addButton(Button button) {
