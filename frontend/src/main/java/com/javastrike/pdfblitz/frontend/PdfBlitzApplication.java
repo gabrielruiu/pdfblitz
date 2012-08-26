@@ -7,7 +7,10 @@ import com.javastrike.pdfblitz.manager.DocumentManager;
 import com.vaadin.service.ApplicationContext;
 import com.vaadin.ui.Window;
 import eu.livotov.tpt.TPTApplication;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.context.ApplicationContextAware;
 
 /**
  *  Main application class
@@ -19,11 +22,15 @@ import org.springframework.beans.factory.annotation.Configurable;
  */
 
 @Configurable
-public class PdfBlitzApplication extends TPTApplication implements ApplicationContext.TransactionListener{
+public class PdfBlitzApplication extends TPTApplication implements ApplicationContext.TransactionListener,
+        ApplicationContextAware {
 
 
     //TODO: inject using Spring
+    @Autowired
     private DocumentManager documentManager;
+
+    private org.springframework.context.ApplicationContext applicationContext;
 
     public DocumentManager getDocumentManager() {
         return documentManager;
@@ -55,5 +62,12 @@ public class PdfBlitzApplication extends TPTApplication implements ApplicationCo
         documentManager = new DocumentManager();
         documentManager.getConversionOperations().getConverterResolver()
                 .getConverterRegistry().registerDocumentConverter((new StreamResourceConverter()));
+    }
+
+    @Override
+    public void setApplicationContext(org.springframework.context.ApplicationContext applicationContext)
+            throws BeansException {
+
+        this.applicationContext = applicationContext;
     }
 }

@@ -2,10 +2,10 @@ package com.javastrike.pdfblitz.frontend.components.editor.toolbox.buttons.click
 
 import com.javastrike.pdfblitz.frontend.PdfBlitzApplication;
 import com.javastrike.pdfblitz.frontend.components.fileupload.UploadType;
-import com.javastrike.pdfblitz.frontend.document.FileDownloadResource;
+import com.javastrike.pdfblitz.frontend.document.FileStreamDownloadResource;
 import com.javastrike.pdfblitz.frontend.utils.ArchiveUtils;
 import com.javastrike.pdfblitz.frontend.windows.FileUploadWindow;
-import com.javastrike.pdfblitz.frontend.zip.DocumentToFileArchiver;
+import com.javastrike.pdfblitz.frontend.zip.DefaultDocumentArchiver;
 import com.javastrike.pdfblitz.frontend.zip.exception.ArchivingException;
 import com.javastrike.pdfblitz.manager.exception.DocumentOperationException;
 import com.javastrike.pdfblitz.manager.exception.conversion.ConversionException;
@@ -15,16 +15,16 @@ import com.javastrike.pdfblitz.manager.exception.pdfoperations.PdfDocumentOperat
 import com.javastrike.pdfblitz.manager.model.Document;
 import com.javastrike.pdfblitz.manager.operations.ConversionOperations;
 import com.javastrike.pdfblitz.manager.operations.PdfDocumentOperations;
+import com.vaadin.terminal.StreamResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.Upload;
 import com.vaadin.ui.Window;
 import org.apache.log4j.Logger;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.text.MessageFormat;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -170,29 +170,28 @@ public abstract class DocumentOperationButtonClickListener implements Button.Cli
     }
 
 
-    //TODO: show error notifications
     private void archiveModifiedFilesAndSendForDownload(List<? extends Document> modifiedDocuments)
             throws DocumentOperationException {
 
-        //TODO: get from ArchiveUtils.generateFullPathForArchive()
-        //TODO: dont use "\\" character
-        String path = MessageFormat.format("{0}{1}{2}",
-                PdfBlitzApplication.getCurrentApplication().getContext().getBaseDirectory().getAbsolutePath(),
-                "\\" + "VAADIN" + "\\" + "export" + "\\",
-                ArchiveUtils.generateNameForArchive());
-
-        File archiveFile = new File(path);
-
         try {
-            new DocumentToFileArchiver().archive(modifiedDocuments,new FileOutputStream(archiveFile));
+
+            final ByteArrayOutputStream archiveStream = new ByteArrayOutputStream();
+            new DefaultDocumentArchiver().archive(modifiedDocuments,archiveStream);
+
+            StreamResource.StreamSource streamSource = new StreamResource.StreamSource() {
+                @Override
+                public InputStream getStream() {
+                    return new ByteArrayInputStream(archiveStream.toByteArray());
+                }
+            };
+
+
             PdfBlitzApplication.getCurrentApplication().getMainWindow().open(
-                    new FileDownloadResource(archiveFile,PdfBlitzApplication.getCurrentApplication()));
+                    new FileStreamDownloadResource(streamSource,
+                            ArchiveUtils.generateNameForArchive(),
+                            PdfBlitzApplication.getCurrentApplication())
+            );
 
-
-
-        } catch (FileNotFoundException e) {
-            LOG.error("Error archiving documents", e);
-            throw new ArchivingException("Error archiving documents",e);
         } catch (ArchivingException e) {
             LOG.error("Error archiving documents", e);
             throw new ArchivingException("Error archiving documents", e);

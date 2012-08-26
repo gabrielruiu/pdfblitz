@@ -1,8 +1,8 @@
 package com.javastrike.pdfblitz.manager.converter.impl.pdfbox;
 
+import com.javastrike.pdfblitz.manager.converter.image.ImageConverter;
 import com.javastrike.pdfblitz.manager.converter.management.ConversionContext;
 import com.javastrike.pdfblitz.manager.converter.management.IdentifierType;
-import com.javastrike.pdfblitz.manager.converter.image.ImageConverter;
 import com.javastrike.pdfblitz.manager.exception.conversion.ConversionException;
 import com.javastrike.pdfblitz.manager.model.Document;
 import com.javastrike.pdfblitz.manager.model.ImageDocument;
@@ -12,10 +12,8 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.graphics.xobject.PDJpeg;
 import org.apache.pdfbox.pdmodel.graphics.xobject.PDXObjectImage;
-import org.apache.pdfbox.util.ImageIOUtil;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -27,7 +25,7 @@ public class ImageToPDDConverter implements ImageConverter<PDDocument> {
 
 	
 	private static final int IMAGE_TYPE = 1;
-	private static final int RESOLUTION = 500;
+	private static final int RESOLUTION = 300;
 
     @Override
     public boolean supports(Class<Object> clazz) {

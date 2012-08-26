@@ -2,7 +2,6 @@ package com.javastrike.pdfblitz.frontend.spring;
 
 import com.javastrike.pdfblitz.frontend.document.provider.StreamResourceConverter;
 import com.javastrike.pdfblitz.manager.DocumentManager;
-import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DocumentManagerBeanConfiguration {
 
-    @Bean(autowire = Autowire.BY_TYPE)
+    @Bean
     public DocumentManager documentManager(){
 
         DocumentManager documentManager = new DocumentManager();
