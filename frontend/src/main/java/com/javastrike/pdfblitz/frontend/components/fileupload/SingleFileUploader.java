@@ -2,6 +2,7 @@ package com.javastrike.pdfblitz.frontend.components.fileupload;
 
 import com.javastrike.pdfblitz.manager.model.Document;
 import com.vaadin.ui.*;
+import org.apache.commons.io.IOUtils;
 
 import java.io.ByteArrayOutputStream;
 
@@ -141,6 +142,7 @@ public class SingleFileUploader extends FileUploader<Document>{
         uploadField.addListener(new Upload.FinishedListener() {
             @Override
             public void uploadFinished(Upload.FinishedEvent event) {
+                IOUtils.closeQuietly(contentStream);
                 uploadState.setValue("Idle");
                 progressIndicator.setVisible(false);
                 textualProgress.setVisible(false);
@@ -199,6 +201,7 @@ public class SingleFileUploader extends FileUploader<Document>{
 
         public ByteArrayOutputStream receiveUpload(String filename, String MIMEType) {
 
+            contentStream = new ByteArrayOutputStream();
             payload = new Document();
             payload.setName(filename);
             payload.setMimeType(MIMEType);
