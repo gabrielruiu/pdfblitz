@@ -13,8 +13,8 @@ public class PdfDocument extends Document {
     public PdfDocument() {
     }
 
-    public PdfDocument(byte[] content, String name, String MIMEtype) {
-        super(content, name, MIMEtype);
+    public PdfDocument(byte[] content, String name) {
+        super(content, name, MimeType.PDF);
     }
 
     public String getVersion() {
@@ -31,5 +31,14 @@ public class PdfDocument extends Document {
 
     public void setEncrpyted(boolean encrpyted) {
         isEncrpyted = encrpyted;
+    }
+
+    @Override
+    public MimeType getMimeType() {
+        return MimeType.PDF;
+    }
+
+    @Override
+    public void setMimeType(MimeType mimeType) {
     }
 }

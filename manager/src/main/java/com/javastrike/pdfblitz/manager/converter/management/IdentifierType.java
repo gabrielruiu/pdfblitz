@@ -4,6 +4,7 @@ package com.javastrike.pdfblitz.manager.converter.management;
  * @author Ruiu Gabriel Mihai (gabriel.ruiu@mail.com)
  */
 public enum IdentifierType {
+
     DOCUMENT_NAME,
     MIME_TYPE,
 

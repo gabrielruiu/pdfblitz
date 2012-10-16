@@ -53,14 +53,6 @@ public class PdfBlitzApplication extends TPTApplication implements ApplicationCo
 
     }
 
-/*    //TODO: remove when DocumentManager will be injected through Spring
-    private void setupDocumentManager(){
-
-        documentManager = new DocumentManager();
-        documentManager.getConversionOperations().getConverterResolver()
-                .getConverterRegistry().registerDocumentConverter((new StreamResourceConverter()));
-    }*/
-
     @Override
     public void setApplicationContext(org.springframework.context.ApplicationContext applicationContext)
             throws BeansException {

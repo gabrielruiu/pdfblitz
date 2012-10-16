@@ -1,15 +1,15 @@
 package com.javastrike.pdfblitz.manager.converter.impl.document;
 
-import com.javastrike.pdfblitz.manager.converter.management.ConversionContext;
 import com.javastrike.pdfblitz.manager.converter.Converter;
+import com.javastrike.pdfblitz.manager.converter.management.ConversionContext;
 import com.javastrike.pdfblitz.manager.converter.management.IdentifierType;
 import com.javastrike.pdfblitz.manager.exception.conversion.ConversionException;
 import com.javastrike.pdfblitz.manager.model.Document;
+import com.javastrike.pdfblitz.manager.model.MimeType;
+import org.apache.commons.io.IOUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-
-import org.apache.commons.io.IOUtils;
 
 /**
  * Handles conversion of a Document to and from java.io.ByteArrayInputStream
@@ -42,7 +42,7 @@ public class DocumentByteStreamConverter implements Converter<ByteArrayInputStre
 		Document document;
 		try {
 			String name = (String) context.getConversionParameter(IdentifierType.DOCUMENT_NAME).getValue();
-			String mimeType = (String) context.getConversionParameter(IdentifierType.MIME_TYPE).getValue();
+			MimeType mimeType = (MimeType) context.getConversionParameter(IdentifierType.MIME_TYPE).getValue();
 			byte[] content = IOUtils.toByteArray(stream);
 
             document = new Document(content,name,mimeType);

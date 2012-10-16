@@ -11,6 +11,7 @@ import com.javastrike.pdfblitz.manager.converter.pdf.PdfConverter;
 import com.javastrike.pdfblitz.manager.exception.conversion.ConversionException;
 import com.javastrike.pdfblitz.manager.model.Document;
 import com.javastrike.pdfblitz.manager.model.ImageDocument;
+import com.javastrike.pdfblitz.manager.model.MimeType;
 import com.javastrike.pdfblitz.manager.model.PdfDocument;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
@@ -101,8 +102,8 @@ public class PdfToImageConverter implements PdfConverter<List<ImageDocument>> {
     }
 
     //TODO: replace with DocumentNameUtils.addNumberPrefixToDocumentName()
-    private String generateOutputForImage(String outputPrefix, int pageNumber, String imageFormat) {
-        return MessageFormat.format("{0}_{1}.{2}",outputPrefix,pageNumber,imageFormat);
+    private String generateOutputForImage(String outputPrefix, int pageNumber) {
+        return MessageFormat.format("{0}_{1}.{2}",outputPrefix,pageNumber, MimeType.IMAGE_JPEG.getFileExtension());
     }
 
     private PDDocument convertPdfToPDD(PdfDocument pdfDocument, ConversionContext context) throws ConversionException {
@@ -155,8 +156,7 @@ public class PdfToImageConverter implements PdfConverter<List<ImageDocument>> {
     private ConversionContext generateImageConversionContext(ConversionContext context, int pageNumber) {
 
         String imageNamePrefix = (String) context.getConversionParameter(IdentifierType.IMAGE_OUTPUT_PREFIX).getValue();
-        String imageFormat = (String) context.getConversionParameter(IdentifierType.IMAGE_FORMAT).getValue();
-        String imageName = generateOutputForImage(imageNamePrefix,pageNumber,imageFormat);
+        String imageName = generateOutputForImage(imageNamePrefix,pageNumber);
 
         ConversionContext imageConversionContext = new DefaultConversionContext()
                 .addConversionParameter(IdentifierType.DOCUMENT_NAME,

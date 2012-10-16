@@ -87,9 +87,7 @@ public class PdfBoxConversionOperations implements ConversionOperations {
                     .addConversionParameter(IdentifierType.MIME_TYPE,
                             new StringConversionParameter("image/jpg"))
                     .addConversionParameter(IdentifierType.IMAGE_PAGE_INDICES,
-                            new IntegerArrayConversionParameter(pageIndices))
-                    .addConversionParameter(IdentifierType.IMAGE_FORMAT,
-                            new StringConversionParameter("jpg"));
+                            new IntegerArrayConversionParameter(pageIndices));
 
             images = converter.provideDocument(pdfDocument,context);
 

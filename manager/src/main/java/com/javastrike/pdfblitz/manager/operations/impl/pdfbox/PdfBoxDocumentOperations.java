@@ -1,21 +1,18 @@
 package com.javastrike.pdfblitz.manager.operations.impl.pdfbox;
 
-import com.javastrike.pdfblitz.manager.converter.impl.IntegerArrayConversionParameter;
-import com.javastrike.pdfblitz.manager.converter.impl.pdf.PdfToImageConverter;
-import com.javastrike.pdfblitz.manager.exception.pdfoperations.PageIndicesOutOfRangeException;
-import com.javastrike.pdfblitz.manager.exception.pdfoperations.PdfDocumentOperationException;
-import com.javastrike.pdfblitz.manager.utils.DocumentNameUtils;
 import com.javastrike.pdfblitz.manager.converter.impl.DefaultConversionContext;
 import com.javastrike.pdfblitz.manager.converter.impl.StringConversionParameter;
 import com.javastrike.pdfblitz.manager.converter.management.ConversionContext;
 import com.javastrike.pdfblitz.manager.converter.management.ConverterResolver;
 import com.javastrike.pdfblitz.manager.converter.management.IdentifierType;
 import com.javastrike.pdfblitz.manager.exception.conversion.ConversionException;
-import com.javastrike.pdfblitz.manager.model.ImageDocument;
+import com.javastrike.pdfblitz.manager.exception.pdfoperations.PageIndicesOutOfRangeException;
+import com.javastrike.pdfblitz.manager.exception.pdfoperations.PdfDocumentOperationException;
 import com.javastrike.pdfblitz.manager.model.PdfDocument;
 import com.javastrike.pdfblitz.manager.operations.ConversionSupport;
 import com.javastrike.pdfblitz.manager.operations.PdfDocumentOperations;
 import com.javastrike.pdfblitz.manager.operations.impl.DefaultConversionSupport;
+import com.javastrike.pdfblitz.manager.utils.DocumentNameUtils;
 import com.javastrike.pdfblitz.manager.utils.DocumentOperationUtils;
 import org.apache.commons.collections.primitives.ArrayIntList;
 import org.apache.commons.io.output.ByteArrayOutputStream;
@@ -153,9 +150,8 @@ public class PdfBoxDocumentOperations  implements PdfDocumentOperations , Conver
 
             byte[] content = mergedContent.toByteArray();
             String name = (String) conversionContext.getConversionParameter(IdentifierType.DOCUMENT_NAME).getValue();
-            String mimeType = (String) conversionContext.getConversionParameter(IdentifierType.MIME_TYPE).getValue();
 
-            pdfDocument = new PdfDocument(content,name,mimeType);
+            pdfDocument = new PdfDocument(content,name);
 
         } catch (IOException e) {
             throw new PdfDocumentOperationException("Error merging documents", e);

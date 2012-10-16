@@ -5,6 +5,7 @@ import com.javastrike.pdfblitz.manager.converter.management.ConversionContext;
 import com.javastrike.pdfblitz.manager.converter.management.IdentifierType;
 import com.javastrike.pdfblitz.manager.exception.conversion.ConversionException;
 import com.javastrike.pdfblitz.manager.model.Document;
+import com.javastrike.pdfblitz.manager.model.MimeType;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
@@ -60,7 +61,7 @@ public class DocumentFileConverter implements Converter<File, Document> {
 		Document document;
 		try {
 			String name = file.getName();
-			String mimeType = (String) context.getConversionParameter(IdentifierType.MIME_TYPE).getValue();
+			MimeType mimeType = (MimeType) context.getConversionParameter(IdentifierType.MIME_TYPE).getValue();
 			byte[] content = FileUtils.readFileToByteArray(file);
 
             document = new Document(content,name,mimeType);

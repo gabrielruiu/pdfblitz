@@ -36,8 +36,7 @@ public class SplitPagesClickListener extends DocumentOperationButtonClickListene
 
         try {
 
-            PdfDocument pdfDocument = new PdfDocument(documents.get(0).getContent(),
-                    documents.get(0).getName(),documents.get(0).getMimeType());
+            PdfDocument pdfDocument = new PdfDocument(documents.get(0).getContent(), documents.get(0).getName());
             pdfDocuments = getPdfDocumentOperations().splitAtPages(pdfDocument, pageIndices);
 
         } catch (PdfDocumentOperationException e) {

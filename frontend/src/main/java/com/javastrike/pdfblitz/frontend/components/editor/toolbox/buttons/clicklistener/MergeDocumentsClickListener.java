@@ -60,7 +60,7 @@ public class MergeDocumentsClickListener extends DocumentOperationButtonClickLis
         for (int i = 0; i<documents.size(); i++) {
 
             Document document = documents.get(i);
-            pdfDocuments[i] = new PdfDocument(document.getContent(),document.getName(),document.getMimeType());
+            pdfDocuments[i] = new PdfDocument(document.getContent(),document.getName());
         }
         return pdfDocuments;
     }

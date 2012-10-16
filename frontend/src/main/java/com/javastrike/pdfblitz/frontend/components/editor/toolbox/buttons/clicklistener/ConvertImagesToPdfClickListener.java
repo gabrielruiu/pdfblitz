@@ -62,8 +62,7 @@ public class ConvertImagesToPdfClickListener extends DocumentOperationButtonClic
 
         List<ImageDocument> images = new ArrayList<ImageDocument>();
         for (Document document : documents) {
-            images.add(new ImageDocument(document.getContent(),document.getName(),document.getMimeType(),
-                    ImageDocument.ImageFormat.JPG));
+            images.add(new ImageDocument(document.getContent(),document.getName()));
         }
         return images;
     }

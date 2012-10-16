@@ -5,13 +5,13 @@ import com.javastrike.pdfblitz.manager.converter.Converter;
 import com.javastrike.pdfblitz.manager.converter.management.ConversionContext;
 import com.javastrike.pdfblitz.manager.exception.conversion.ConversionException;
 import com.javastrike.pdfblitz.manager.model.Document;
+import com.javastrike.pdfblitz.manager.model.MimeType;
 import com.vaadin.terminal.StreamResource;
+import org.apache.commons.io.IOUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
-import org.apache.commons.io.IOUtils;
 
 /**
  * @author Ruiu Gabriel Mihai (gabriel.ruiu@mail.com)
@@ -52,10 +52,10 @@ public class StreamResourceConverter implements Converter<StreamResource, Docume
 
         try {
             String name = streamResource.getFilename();
-            String mimeType = streamResource.getMIMEType();
+            /*MimeType mimeType = streamResource.getMIMEType();*/
             byte[] content = IOUtils.toByteArray(streamResource.getStreamSource().getStream());
 
-            document = new Document(content,name,mimeType);
+            document = new Document(content, name, MimeType.UNKNOWN);
         } catch (IOException e) {
             throw new ConversionException("Error converting from com.vaadin.terminal.StreamResource to Document",e);
         }

@@ -5,13 +5,19 @@ package com.javastrike.pdfblitz.manager.model;
  */
 public enum MimeType {
 
+    UNKNOWN("",""),
     TEXT("text/plain", "txt"),
     PDF("application/pdf","pdf"),
-    IMAGE_JPG("image/jpg","jpg");
+    IMAGE_JPEG("image/jpeg","jpg");
 
 
     private String mimeType;
     private String fileExtension;
+
+
+    private MimeType(String mimeType) {
+        this.mimeType = mimeType;
+    }
 
     private MimeType(String mimeType, String fileExtension) {
         this.mimeType = mimeType;
@@ -21,5 +27,9 @@ public enum MimeType {
     @Override
     public String toString() {
         return mimeType;
+    }
+
+    public String getFileExtension() {
+        return fileExtension;
     }
 }

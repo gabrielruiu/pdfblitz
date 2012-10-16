@@ -49,9 +49,8 @@ public class PdfToPDDConverter implements PdfConverter<PDDocument> {
         try {
             byte[] content = getContentFromPDDocument(pdDocument);
             String name = (String) context.getConversionParameter(IdentifierType.DOCUMENT_NAME).getValue();
-            String mimeType = (String) context.getConversionParameter(IdentifierType.MIME_TYPE).getValue();
 
-            document = new PdfDocument(content,name,mimeType);
+            document = new PdfDocument(content,name);
         } catch (IOException e) {
             throw new ConversionException("Error converting from PDDocument to Document",e);
         } catch (COSVisitorException e) {

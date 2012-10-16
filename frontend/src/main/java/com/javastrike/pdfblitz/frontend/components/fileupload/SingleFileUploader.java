@@ -2,6 +2,7 @@ package com.javastrike.pdfblitz.frontend.components.fileupload;
 
 import com.javastrike.pdfblitz.frontend.PdfBlitzApplication;
 import com.javastrike.pdfblitz.manager.model.Document;
+import com.javastrike.pdfblitz.manager.model.MimeType;
 import com.vaadin.ui.*;
 import org.apache.commons.io.IOUtils;
 
@@ -219,7 +220,7 @@ public class SingleFileUploader extends FileUploader<Document>{
             contentStream = new ByteArrayOutputStream();
             payload = new Document();
             payload.setName(filename);
-            payload.setMimeType(MIMEType);
+            payload.setMimeType(MimeType.UNKNOWN);
             return contentStream;
         }
     }

@@ -50,6 +50,6 @@ public class ConvertPdfToImagesClickListener extends DocumentOperationButtonClic
 
 
     private PdfDocument convertDocumentToPdf(Document document) {
-            return new PdfDocument(document.getContent(),document.getName(),document.getMimeType());
+            return new PdfDocument(document.getContent(),document.getName());
     }
 }

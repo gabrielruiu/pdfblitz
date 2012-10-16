@@ -1,10 +1,11 @@
 package com.javastrike.pdfblitz.manager.converter.impl.document;
 
-import com.javastrike.pdfblitz.manager.converter.management.ConversionContext;
 import com.javastrike.pdfblitz.manager.converter.Converter;
+import com.javastrike.pdfblitz.manager.converter.management.ConversionContext;
 import com.javastrike.pdfblitz.manager.converter.management.IdentifierType;
 import com.javastrike.pdfblitz.manager.exception.conversion.ConversionException;
 import com.javastrike.pdfblitz.manager.model.Document;
+import com.javastrike.pdfblitz.manager.model.MimeType;
 
 /**
  * TODO: possible character set issues?
@@ -33,7 +34,7 @@ public class DocumentStringConverter implements Converter<String, Document> {
 
         byte[] content = string.getBytes();
         String name = (String) context.getConversionParameter(IdentifierType.DOCUMENT_NAME).getValue();
-        String mimeType = (String) context.getConversionParameter(IdentifierType.MIME_TYPE).getValue();
+        MimeType mimeType = (MimeType) context.getConversionParameter(IdentifierType.MIME_TYPE).getValue();
 
         Document document = new Document(content,name,mimeType);
 

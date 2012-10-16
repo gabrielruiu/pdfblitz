@@ -35,8 +35,7 @@ public class ExtractPagesClickListener extends DocumentOperationButtonClickListe
 
         List<PdfDocument> pdfDocuments;
         try {
-            PdfDocument pdfDocument = new PdfDocument(documents.get(0).getContent(),
-                    documents.get(0).getName(),documents.get(0).getMimeType());
+            PdfDocument pdfDocument = new PdfDocument(documents.get(0).getContent(), documents.get(0).getName());
 
             pdfDocuments = getPdfDocumentOperations().extractPages(pdfDocument,pageIndices);
 

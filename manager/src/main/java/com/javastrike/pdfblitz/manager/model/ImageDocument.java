@@ -5,31 +5,19 @@ package com.javastrike.pdfblitz.manager.model;
  */
 public class ImageDocument extends Document {
 
-
-    private ImageFormat imageFormat;
-
-    public ImageDocument(ImageFormat imageFormat) {
-        this.imageFormat = imageFormat;
+    public ImageDocument() {
     }
 
-    public ImageDocument(byte[] content, String name, String MIMEtype, ImageFormat imageFormat) {
-        super(content, name, MIMEtype);
-        this.imageFormat = imageFormat;
+    public ImageDocument(byte[] content, String name) {
+        super(content, name, MimeType.IMAGE_JPEG);
     }
 
-    public ImageFormat getImageFormat() {
-        return imageFormat;
+    @Override
+    public MimeType getMimeType() {
+        return MimeType.IMAGE_JPEG;
     }
 
-    public void setImageFormat(ImageFormat imageFormat) {
-        this.imageFormat = imageFormat;
+    @Override
+    public void setMimeType(MimeType mimeType) {
     }
-
-
-    public enum ImageFormat {
-
-        JPEG,
-        JPG
-    }
-
 }

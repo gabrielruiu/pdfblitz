@@ -5,12 +5,12 @@ public class Document {
 
     private byte[] content;
     private String name;
-    private String mimeType;
+    private MimeType mimeType;
 
     public Document() {
     }
 
-    public Document(byte[] content, String name, String mimeType) {
+    public Document(byte[] content, String name, MimeType mimeType) {
         this.content = content;
         this.name = name;
         this.mimeType = mimeType;
@@ -32,11 +32,11 @@ public class Document {
         this.name = name;
     }
 
-    public String getMimeType() {
+    public MimeType getMimeType() {
         return mimeType;
     }
 
-    public void setMimeType(String mimeType) {
+    public void setMimeType(MimeType mimeType) {
         this.mimeType = mimeType;
     }
 }

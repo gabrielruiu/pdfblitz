@@ -67,7 +67,6 @@ public class ImageToPDDConverter implements ImageConverter<PDDocument> {
         try {
             int pageNumber = (Integer) context.getConversionParameter(IdentifierType.IMAGE_PAGE_NUMBER).getValue();
             String imageName = (String) context.getConversionParameter(IdentifierType.DOCUMENT_NAME).getValue();
-            String mimeType = (String) context.getConversionParameter(IdentifierType.MIME_TYPE).getValue();
 
             PDPage page = (PDPage) pdDocument.getDocumentCatalog().getAllPages().get(pageNumber-1);
             BufferedImage image = page.convertToImage(IMAGE_TYPE,RESOLUTION);
@@ -75,8 +74,7 @@ public class ImageToPDDConverter implements ImageConverter<PDDocument> {
             ByteArrayOutputStream contentStream = new ByteArrayOutputStream();
             ImageIO.write(image,"jpg",contentStream);
 
-            imageDocument = new ImageDocument(contentStream.toByteArray(), imageName, mimeType,
-                    ImageDocument.ImageFormat.JPG);
+            imageDocument = new ImageDocument(contentStream.toByteArray(), imageName);
             contentStream.close();
 
 

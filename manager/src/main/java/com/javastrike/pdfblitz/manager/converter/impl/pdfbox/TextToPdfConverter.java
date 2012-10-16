@@ -55,9 +55,7 @@ public class TextToPdfConverter implements PdfConverter<TextDocument>{
             PdfToPDDConverter pdfToPDDConverter = new PdfToPDDConverter();
             ConversionContext pdfToPDDConversionContext = new DefaultConversionContext()
                     .addConversionParameter(IdentifierType.DOCUMENT_NAME,
-                            new StringConversionParameter(replaceTextExtensionWithPdf(textDocument.getName())))
-                    .addConversionParameter(IdentifierType.MIME_TYPE,
-                            new StringConversionParameter("application/pdf"));
+                            new StringConversionParameter(replaceTextExtensionWithPdf(textDocument.getName())));
 
             pdfDocument = pdfToPDDConverter.convertToDocument(pdDocument, pdfToPDDConversionContext);
 

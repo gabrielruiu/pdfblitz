@@ -6,4 +6,19 @@ package com.javastrike.pdfblitz.manager.model;
 public class TextDocument extends Document {
 
 
+    public TextDocument() {
+    }
+
+    public TextDocument(byte[] content, String name) {
+        super(content, name, MimeType.TEXT);
+    }
+
+    @Override
+    public MimeType getMimeType() {
+        return MimeType.TEXT;
+    }
+
+    @Override
+    public void setMimeType(MimeType mimeType) {
+    }
 }
