@@ -58,10 +58,12 @@ public class DeletePagesClickListener extends DocumentOperationButtonClickListen
         layout.setSpacing(true);
         layout.setSizeFull();
 
-        Label informationText = new Label("Choose which pages you would like to delete from your document");
+        Label informationText = new Label(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+                getMessage("documentoperation.message.delete"));
 
         TextField inputField = new TextField();
-        inputField.setInputPrompt("Example: 1,2,8-10");
+        inputField.setInputPrompt(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+                getMessage("documentoperation.message.indexexample"));
         inputField.addListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(Property.ValueChangeEvent valueChangeEvent) {

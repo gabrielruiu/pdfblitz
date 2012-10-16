@@ -82,7 +82,7 @@ public abstract class DocumentOperationButtonClickListener implements Button.Cli
         filesDownloaded = new ArrayList<Document>();
         final FileUploadWindow fileUploadWindow = new FileUploadWindow(uploadType);
 
-        ((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).getMainWindow().addWindow(fileUploadWindow);
+        (PdfBlitzApplication.getCurrentApplication()).getMainWindow().addWindow(fileUploadWindow);
 
         if (uploadType == UploadType.MULTIPLE) {
             fileUploadWindow.addClickListener(new Button.ClickListener() {
@@ -211,7 +211,8 @@ public abstract class DocumentOperationButtonClickListener implements Button.Cli
             setWidth(400, UNITS_PIXELS);
 
             addComponent(getOperationInterface());
-            addComponent(new Button("Perform operation and download file",new Button.ClickListener() {
+            addComponent(new Button(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+                    getMessage("documentoperation.button"),new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
 

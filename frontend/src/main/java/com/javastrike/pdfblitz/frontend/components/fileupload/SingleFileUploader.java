@@ -1,5 +1,6 @@
 package com.javastrike.pdfblitz.frontend.components.fileupload;
 
+import com.javastrike.pdfblitz.frontend.PdfBlitzApplication;
 import com.javastrike.pdfblitz.manager.model.Document;
 import com.vaadin.ui.*;
 import org.apache.commons.io.IOUtils;
@@ -87,7 +88,8 @@ public class SingleFileUploader extends FileUploader<Document>{
         uploadReceiver = new SingleUploadReceiver();
         uploadField = new Upload(null, uploadReceiver);
         configureUploadListeners();
-        cancelUploadButton = new Button("Cancel");
+        cancelUploadButton = new Button(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+                getMessage("fileuploader.single.button.cancel"));
         progressIndicator = new ProgressIndicator();
         uploadState = new Label();
         result = new Label();
@@ -107,7 +109,8 @@ public class SingleFileUploader extends FileUploader<Document>{
                 progressIndicator.setPollingInterval(500); // hit server frequently to get
                 textualProgress.setVisible(true);
                 // updates to client
-                uploadState.setValue("Uploading");
+                uploadState.setValue(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+                        getMessage("fileuploader.single.upload.started"));
                 fileName.setValue(event.getFilename());
 
                 cancelUploadButton.setVisible(true);
@@ -120,7 +123,9 @@ public class SingleFileUploader extends FileUploader<Document>{
 
                 // this method gets called several times during the update
                 progressIndicator.setValue(new Float(readBytes / (float) contentLength));
-                textualProgress.setValue("Processed " + readBytes + " bytes of " + contentLength);
+                textualProgress.setValue(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+                        getMessage("fileuploader.single.upload.progress",new Object[] {String.valueOf(readBytes),
+                                String.valueOf(contentLength)}));
             }
         });
 
@@ -128,14 +133,16 @@ public class SingleFileUploader extends FileUploader<Document>{
         uploadField.addListener(new Upload.SucceededListener() {
             @Override
             public void uploadSucceeded(Upload.SucceededEvent event) {
-                result.setValue("File uploaded");
+                result.setValue(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+                        getMessage("fileuploader.single.upload.succeded"));
             }
         });
 
         uploadField.addListener(new Upload.FailedListener() {
             @Override
             public void uploadFailed(Upload.FailedEvent event) {
-                result.setValue("Upload interrupted");
+                result.setValue(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+                        getMessage("fileuploader.single.upload.interrupted"));
             }
         });
 
@@ -143,7 +150,8 @@ public class SingleFileUploader extends FileUploader<Document>{
             @Override
             public void uploadFinished(Upload.FinishedEvent event) {
                 IOUtils.closeQuietly(contentStream);
-                uploadState.setValue("Idle");
+                uploadState.setValue(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+                        getMessage("fileuploader.single.upload.finished"));
                 progressIndicator.setVisible(false);
                 textualProgress.setVisible(false);
                 cancelUploadButton.setVisible(false);
@@ -155,7 +163,8 @@ public class SingleFileUploader extends FileUploader<Document>{
 
         //upload field
         uploadField.setImmediate(true);
-        uploadField.setButtonCaption("Click to browse");
+        uploadField.setButtonCaption(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+                getMessage("fileuploader.single.button.browse"));
         addComponent(uploadField);
 
         //cancel upload button
@@ -168,7 +177,8 @@ public class SingleFileUploader extends FileUploader<Document>{
         cancelUploadButton.setStyleName("small");
 
         //panel
-        Panel panel = new Panel("Status");
+        Panel panel = new Panel(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+                getMessage("fileuploader.single.panel.title"));
         panel.setSizeUndefined();
         FormLayout formLayout = new FormLayout();
         formLayout.setMargin(true);
@@ -178,16 +188,21 @@ public class SingleFileUploader extends FileUploader<Document>{
 
         uploadStateLayout.addComponent(uploadState);
         uploadStateLayout.addComponent(cancelUploadButton);
-        uploadStateLayout.setCaption("Current state");
-        uploadState.setValue("Idle");
+        uploadStateLayout.setCaption(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+                getMessage("fileuploader.single.panel.currentstate"));
+        uploadState.setValue(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+                getMessage("fileuploader.single.upload.finished"));
         formLayout.addComponent(uploadStateLayout);
-        fileName.setCaption("File name");
+        fileName.setCaption(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+                getMessage("fileuploader.single.panel.filename"));
         formLayout.addComponent(fileName);
-        result.setCaption("Line breaks counted");
+        result.setCaption(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+                getMessage("fileuploader.single.panel.linebreaks"));
         formLayout.addComponent(result);
 
         //progress indicator
-        progressIndicator.setCaption("Progress");
+        progressIndicator.setCaption(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+                getMessage("fileuploader.single.progressindicator.caption"));
         progressIndicator.setVisible(false);
         formLayout.addComponent(progressIndicator);
         textualProgress.setVisible(false);

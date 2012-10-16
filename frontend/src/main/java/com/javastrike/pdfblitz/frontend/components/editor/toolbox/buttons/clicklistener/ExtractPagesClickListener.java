@@ -55,10 +55,12 @@ public class ExtractPagesClickListener extends DocumentOperationButtonClickListe
         layout.setSpacing(true);
         layout.setSizeFull();
 
-        Label informationText = new Label("Choose which pages you would like to extract as individual documents");
+        Label informationText = new Label(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+                getMessage("documentoperation.message.extract"));
 
         TextField inputField = new TextField();
-        inputField.setInputPrompt("Example: 1,2,8-10");
+        inputField.setInputPrompt(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+                getMessage("documentoperation.message.indexexample"));
         inputField.addListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(Property.ValueChangeEvent valueChangeEvent) {

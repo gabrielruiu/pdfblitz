@@ -1,5 +1,6 @@
 package com.javastrike.pdfblitz.frontend.components.editor.toolbox.buttons;
 
+import com.javastrike.pdfblitz.frontend.PdfBlitzApplication;
 import com.javastrike.pdfblitz.frontend.components.editor.toolbox.buttons.clicklistener.ConvertTextToPdfClickListener;
 import com.vaadin.terminal.ThemeResource;
 
@@ -9,7 +10,8 @@ import com.vaadin.terminal.ThemeResource;
 public class ConvertTextToPdfButton extends DocumentOperationButton {
 
     public ConvertTextToPdfButton() {
-        super("Convert a simple text file into a PDF document", new ConvertTextToPdfClickListener(),
+        super(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+                getMessage("button.convert.texttopdf"), new ConvertTextToPdfClickListener(),
                 new ThemeResource("icons/operations/texttopdf.png"));
     }
 }

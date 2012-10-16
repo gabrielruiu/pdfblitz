@@ -1,5 +1,6 @@
 package com.javastrike.pdfblitz.frontend.components.editor.toolbox.buttons;
 
+import com.javastrike.pdfblitz.frontend.PdfBlitzApplication;
 import com.javastrike.pdfblitz.frontend.components.editor.toolbox.buttons.clicklistener.SplitPagesClickListener;
 import com.vaadin.terminal.ThemeResource;
 
@@ -10,7 +11,8 @@ public class SplitPagesButton extends DocumentOperationButton {
 
 
     public SplitPagesButton() {
-        super("Split into several documents",new SplitPagesClickListener(),
+        super(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+                getMessage("button.operation.split"),new SplitPagesClickListener(),
         		new ThemeResource("icons/operations/split.png"));
     }
 }

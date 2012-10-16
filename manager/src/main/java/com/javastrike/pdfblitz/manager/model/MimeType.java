@@ -5,6 +5,7 @@ package com.javastrike.pdfblitz.manager.model;
  */
 public enum MimeType {
 
+    TEXT("text/plain", "txt"),
     PDF("application/pdf","pdf"),
     IMAGE_JPG("image/jpg","jpg");
 

@@ -8,7 +8,7 @@
 
     <servlet>
         <servlet-name>Pdf Blitz</servlet-name>
-        <servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
+        <servlet-class>com.javastrike.pdfblitz.frontend.spring.SpringVaadinServlet</servlet-class>
         <init-param>
             <param-name>application</param-name>
             <param-value>com.javastrike.pdfblitz.frontend.PdfBlitzApplication</param-value>
@@ -19,12 +19,6 @@
         <servlet-name>Pdf Blitz</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
-
-
-    <!-- Let Spring know when new sessions are started -->
-    <listener>
-        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
-    </listener>
 
     <context-param>
         <param-name>contextConfigLocation</param-name>

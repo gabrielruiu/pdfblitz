@@ -1,5 +1,6 @@
 package com.javastrike.pdfblitz.frontend.components.editor.toolbox.buttons;
 
+import com.javastrike.pdfblitz.frontend.PdfBlitzApplication;
 import com.javastrike.pdfblitz.frontend.components.editor.toolbox.buttons.clicklistener.DeletePagesClickListener;
 import com.vaadin.terminal.ThemeResource;
 
@@ -10,7 +11,8 @@ public class DeletePagesButton extends DocumentOperationButton {
 
 
     public DeletePagesButton() {
-        super("Delete pages from your PDF document", new DeletePagesClickListener(),
+        super(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+                getMessage("button.operation.delete"), new DeletePagesClickListener(),
         		new ThemeResource("icons/operations/deletepages.png"));
     }
 }

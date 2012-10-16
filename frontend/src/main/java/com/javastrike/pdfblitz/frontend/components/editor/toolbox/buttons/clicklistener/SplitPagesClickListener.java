@@ -55,10 +55,12 @@ public class SplitPagesClickListener extends DocumentOperationButtonClickListene
         layout.setSpacing(true);
         layout.setSizeFull();
 
-        Label informationText = new Label("Choose at which pages you would like to separate your document");
+        Label informationText = new Label(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+                getMessage("documentoperation.message.split"));
 
         TextField inputField = new TextField();
-        inputField.setInputPrompt("Example: 1,2,8-10");
+        inputField.setInputPrompt(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+                getMessage("documentoperation.message.indexexample"));
         inputField.addListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(Property.ValueChangeEvent valueChangeEvent) {

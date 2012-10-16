@@ -1,7 +1,6 @@
 package com.javastrike.pdfblitz.frontend;
 
 import com.javastrike.pdfblitz.frontend.components.editor.DocumentToolbox;
-import com.javastrike.pdfblitz.frontend.document.provider.StreamResourceConverter;
 import com.javastrike.pdfblitz.frontend.theme.PdfBlitzTheme;
 import com.javastrike.pdfblitz.manager.DocumentManager;
 import com.vaadin.service.ApplicationContext;
@@ -9,8 +8,9 @@ import com.vaadin.ui.Window;
 import eu.livotov.tpt.TPTApplication;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.ApplicationContextAware;
+
+import java.util.Locale;
 
 /**
  *  Main application class
@@ -21,12 +21,10 @@ import org.springframework.context.ApplicationContextAware;
  * @author Ruiu Gabriel Mihai
  */
 
-@Configurable
+@SuppressWarnings("serial")
 public class PdfBlitzApplication extends TPTApplication implements ApplicationContext.TransactionListener,
         ApplicationContextAware {
 
-
-    //TODO: inject using Spring
     @Autowired
     private DocumentManager documentManager;
 
@@ -41,13 +39,12 @@ public class PdfBlitzApplication extends TPTApplication implements ApplicationCo
 
         setTheme(PdfBlitzTheme.THEME_NAME);
 
-        documentManager = new DocumentManager();
-        setupDocumentManager();
-
+        setLocale(Locale.FRANCE);
 
         Window mainWindow = new Window("PdfBlitz");
         mainWindow.setContent(new DocumentToolbox());
         /*mainWindow.setContent(new TestLayout());*/
+        /*mainWindow.setContent(new LocaleTestLayout());*/
         setMainWindow(mainWindow);
     }
 
@@ -56,18 +53,31 @@ public class PdfBlitzApplication extends TPTApplication implements ApplicationCo
 
     }
 
-    //TODO: remove when DocumentManager will be injected through Spring
+/*    //TODO: remove when DocumentManager will be injected through Spring
     private void setupDocumentManager(){
 
         documentManager = new DocumentManager();
         documentManager.getConversionOperations().getConverterResolver()
                 .getConverterRegistry().registerDocumentConverter((new StreamResourceConverter()));
-    }
+    }*/
 
     @Override
     public void setApplicationContext(org.springframework.context.ApplicationContext applicationContext)
             throws BeansException {
 
         this.applicationContext = applicationContext;
+    }
+
+    public org.springframework.context.ApplicationContext getApplicationContext() {
+        return applicationContext;
+    }
+
+    public String getMessage(String key, Object[] args) {
+        return applicationContext.getMessage(key, args,
+                "Key not found for format" + getLocale().getCountry(), getLocale());
+    }
+    public String getMessage(String key) {
+        return applicationContext.getMessage(key, null,
+                "Key not found for format: " + getLocale().getDisplayName(), getLocale());
     }
 }

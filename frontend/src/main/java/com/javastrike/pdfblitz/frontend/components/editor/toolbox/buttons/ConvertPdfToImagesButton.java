@@ -1,5 +1,6 @@
 package com.javastrike.pdfblitz.frontend.components.editor.toolbox.buttons;
 
+import com.javastrike.pdfblitz.frontend.PdfBlitzApplication;
 import com.javastrike.pdfblitz.frontend.components.editor.toolbox.buttons.clicklistener.ConvertPdfToImagesClickListener;
 import com.vaadin.terminal.ThemeResource;
 
@@ -9,7 +10,8 @@ import com.vaadin.terminal.ThemeResource;
 public class ConvertPdfToImagesButton extends DocumentOperationButton {
 
     public ConvertPdfToImagesButton() {
-        super("Convert a PDF document into several images ", new ConvertPdfToImagesClickListener(),
+        super(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+                getMessage("button.convert.pdftoimages"), new ConvertPdfToImagesClickListener(),
         		new ThemeResource("icons/operations/pdftoimage.png"));
     }
 }

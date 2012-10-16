@@ -1,5 +1,6 @@
 package com.javastrike.pdfblitz.frontend.windows;
 
+import com.javastrike.pdfblitz.frontend.PdfBlitzApplication;
 import com.javastrike.pdfblitz.frontend.components.fileupload.DocumentUploader;
 import com.javastrike.pdfblitz.frontend.components.fileupload.UploadType;
 import com.vaadin.ui.Alignment;
@@ -33,7 +34,7 @@ public class FileUploadWindow extends Window{
 
     public FileUploadWindow(UploadType uploadType) {
 
-        super("Upload your file");
+        super(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).getMessage("fileuploadwindow.title"));
         configureWindow(uploadType);
         initializeComponents();
         drawContents();
@@ -67,14 +68,18 @@ public class FileUploadWindow extends Window{
 
         if (uploadType == UploadType.MULTIPLE) {
 
-            finishedWithUploads = new Button("Finish");
+            finishedWithUploads = new Button(
+                    ((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+                            getMessage("fileuploader.multiple.button.finish"));
             documentUploader.addComponent(finishedWithUploads);
             documentUploader.setComponentAlignment(finishedWithUploads, Alignment.MIDDLE_CENTER);
         }
+        //TODO: bring all error notification messages into one place
         documentUploader.addListener(new Upload.FailedListener() {
             @Override
             public void uploadFailed(Upload.FailedEvent event) {
-                showNotification("Failed to upload file",Notification.TYPE_ERROR_MESSAGE);
+                showNotification(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+                        getMessage("notification.fileupload.failed"),Notification.TYPE_ERROR_MESSAGE);
             }
         });
     }
