@@ -1,4 +1,4 @@
-package com.javastrike.pdfblitz.manager.converter.impl;
+package com.javastrike.pdfblitz.manager.converter.management.impl;
 
 import com.javastrike.pdfblitz.manager.converter.management.ConversionParameter;
 

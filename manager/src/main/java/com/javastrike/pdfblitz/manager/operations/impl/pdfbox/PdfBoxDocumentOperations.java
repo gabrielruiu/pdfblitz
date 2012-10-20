@@ -1,10 +1,10 @@
 package com.javastrike.pdfblitz.manager.operations.impl.pdfbox;
 
-import com.javastrike.pdfblitz.manager.converter.impl.DefaultConversionContext;
-import com.javastrike.pdfblitz.manager.converter.impl.StringConversionParameter;
 import com.javastrike.pdfblitz.manager.converter.management.ConversionContext;
 import com.javastrike.pdfblitz.manager.converter.management.ConverterResolver;
 import com.javastrike.pdfblitz.manager.converter.management.IdentifierType;
+import com.javastrike.pdfblitz.manager.converter.management.impl.DefaultConversionContext;
+import com.javastrike.pdfblitz.manager.converter.management.impl.StringConversionParameter;
 import com.javastrike.pdfblitz.manager.exception.conversion.ConversionException;
 import com.javastrike.pdfblitz.manager.exception.pdfoperations.PageIndicesOutOfRangeException;
 import com.javastrike.pdfblitz.manager.exception.pdfoperations.PdfDocumentOperationException;

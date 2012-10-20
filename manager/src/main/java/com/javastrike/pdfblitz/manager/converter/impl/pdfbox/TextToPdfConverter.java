@@ -1,10 +1,10 @@
 package com.javastrike.pdfblitz.manager.converter.impl.pdfbox;
 
-import com.javastrike.pdfblitz.manager.converter.impl.DefaultConversionContext;
-import com.javastrike.pdfblitz.manager.converter.impl.StringConversionParameter;
 import com.javastrike.pdfblitz.manager.converter.impl.document.DocumentStringConverter;
 import com.javastrike.pdfblitz.manager.converter.management.ConversionContext;
 import com.javastrike.pdfblitz.manager.converter.management.IdentifierType;
+import com.javastrike.pdfblitz.manager.converter.management.impl.DefaultConversionContext;
+import com.javastrike.pdfblitz.manager.converter.management.impl.StringConversionParameter;
 import com.javastrike.pdfblitz.manager.converter.pdf.PdfConverter;
 import com.javastrike.pdfblitz.manager.exception.conversion.ConversionException;
 import com.javastrike.pdfblitz.manager.model.Document;
