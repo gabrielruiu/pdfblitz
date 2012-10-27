@@ -1,10 +1,10 @@
 package com.javastrike.pdfblitz.frontend.components.editor.toolbox.buttons.clicklistener;
 
 import com.javastrike.pdfblitz.frontend.components.fileupload.UploadType;
-import com.javastrike.pdfblitz.manager.converter.impl.DefaultConversionContext;
-import com.javastrike.pdfblitz.manager.converter.impl.StringConversionParameter;
 import com.javastrike.pdfblitz.manager.converter.management.ConversionContext;
 import com.javastrike.pdfblitz.manager.converter.management.IdentifierType;
+import com.javastrike.pdfblitz.manager.converter.management.impl.DefaultConversionContext;
+import com.javastrike.pdfblitz.manager.converter.management.impl.StringConversionParameter;
 import com.javastrike.pdfblitz.manager.exception.DocumentOperationException;
 import com.javastrike.pdfblitz.manager.exception.conversion.ConversionException;
 import com.javastrike.pdfblitz.manager.model.Document;
