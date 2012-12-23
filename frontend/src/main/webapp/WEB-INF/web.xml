@@ -5,7 +5,6 @@
 
     <display-name>Pdf Blitz</display-name>
 
-
     <servlet>
         <servlet-name>Pdf Blitz</servlet-name>
         <servlet-class>com.javastrike.pdfblitz.frontend.spring.SpringVaadinServlet</servlet-class>
@@ -29,13 +28,11 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
-
     <!--Should be enabled when in production mode-->
     <!--<context-param>
     <description>Vaadin production mode</description>
     <param-name>productionMode</param-name>
     <param-value>true</param-value>
-</context-param>-->
-
+    </context-param>-->
 
 </web-app>

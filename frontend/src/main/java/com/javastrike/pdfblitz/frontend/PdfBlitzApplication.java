@@ -39,7 +39,7 @@ public class PdfBlitzApplication extends TPTApplication implements ApplicationCo
 
         setTheme(PdfBlitzTheme.THEME_NAME);
 
-        setLocale(Locale.FRANCE);
+        setLocale(Locale.ENGLISH);
 
         Window mainWindow = new Window("PdfBlitz");
         mainWindow.setContent(new DocumentToolbox());
