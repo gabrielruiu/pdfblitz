@@ -5,7 +5,6 @@ import com.javastrike.pdfblitz.manager.converter.impl.pdfbox.TextToPdfConverter;
 import com.javastrike.pdfblitz.manager.converter.management.ConversionContext;
 import com.javastrike.pdfblitz.manager.converter.management.ConverterResolver;
 import com.javastrike.pdfblitz.manager.converter.management.IdentifierType;
-import com.javastrike.pdfblitz.manager.converter.management.impl.DefaultConversionContext;
 import com.javastrike.pdfblitz.manager.converter.management.impl.IntegerArrayConversionParameter;
 import com.javastrike.pdfblitz.manager.converter.management.impl.StringConversionParameter;
 import com.javastrike.pdfblitz.manager.exception.conversion.ConversionException;
@@ -18,9 +17,10 @@ import com.javastrike.pdfblitz.manager.operations.impl.DefaultConversionSupport;
 import org.apache.commons.collections.primitives.ArrayIntList;
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.junit.Assert;
 
 import java.util.List;
+
+import static org.testng.Assert.assertNotNull;
 
 /**
  * @author Ruiu Gabriel Mihai (gabriel.ruiu@mail.com)
@@ -39,7 +39,7 @@ public class PdfBoxConversionOperations implements ConversionOperations {
 
     public PdfBoxConversionOperations(ConversionSupport conversionSupport) {
 
-        Assert.assertNotNull("ConversionSupport must not be null", conversionSupport);
+        assertNotNull(conversionSupport, "ConversionSupport must not be null");
         this.conversionSupport = conversionSupport;
     }
 
@@ -81,12 +81,12 @@ public class PdfBoxConversionOperations implements ConversionOperations {
             PdfToImageConverter converter = (PdfToImageConverter) getConverterResolver()
                     .getConverter(PdfDocument.class, ImageDocument.class);
 
-            ConversionContext context = new DefaultConversionContext()
+            ConversionContext context = new ConversionContext()
                     .addConversionParameter(IdentifierType.DOCUMENT_NAME,
                             new StringConversionParameter(pdfDocument.getName()))
                     .addConversionParameter(IdentifierType.MIME_TYPE,
                             new StringConversionParameter("image/jpg"))
-                    .addConversionParameter(IdentifierType.IMAGE_PAGE_INDICES,
+                    .addConversionParameter(IdentifierType.PAGE_INDICES,
                             new IntegerArrayConversionParameter(pageIndices));
 
             images = converter.provideDocument(pdfDocument,context);
@@ -149,7 +149,7 @@ public class PdfBoxConversionOperations implements ConversionOperations {
     private PdfDocument convertPDDToPdf(PDDocument pdDocument, String pdfDocumentName)
             throws ConversionException{
 
-        ConversionContext context = new DefaultConversionContext()
+        ConversionContext context = new ConversionContext()
                 .addConversionParameter(IdentifierType.DOCUMENT_NAME, new StringConversionParameter(pdfDocumentName))
                 .addConversionParameter(IdentifierType.MIME_TYPE, new StringConversionParameter("application/pdf"));
 

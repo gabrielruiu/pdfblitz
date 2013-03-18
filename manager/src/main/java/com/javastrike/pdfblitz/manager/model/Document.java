@@ -1,5 +1,10 @@
 package com.javastrike.pdfblitz.manager.model;
 
+import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlType
+@XmlSeeAlso({ImageDocument.class,PdfDocument.class, TextDocument.class})
 public class Document {
 
 

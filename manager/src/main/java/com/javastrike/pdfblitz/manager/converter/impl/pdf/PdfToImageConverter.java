@@ -4,7 +4,6 @@ import com.javastrike.pdfblitz.manager.converter.impl.pdfbox.ImageToPDDConverter
 import com.javastrike.pdfblitz.manager.converter.impl.pdfbox.PdfToPDDConverter;
 import com.javastrike.pdfblitz.manager.converter.management.ConversionContext;
 import com.javastrike.pdfblitz.manager.converter.management.IdentifierType;
-import com.javastrike.pdfblitz.manager.converter.management.impl.DefaultConversionContext;
 import com.javastrike.pdfblitz.manager.converter.management.impl.IntegerConversionParameter;
 import com.javastrike.pdfblitz.manager.converter.management.impl.StringConversionParameter;
 import com.javastrike.pdfblitz.manager.converter.pdf.PdfConverter;
@@ -108,7 +107,7 @@ public class PdfToImageConverter implements PdfConverter<List<ImageDocument>> {
 
     private PDDocument convertPdfToPDD(PdfDocument pdfDocument, ConversionContext context) throws ConversionException {
 
-        ConversionContext pddConversionContext = new DefaultConversionContext()
+        ConversionContext pddConversionContext = new ConversionContext()
                 .addConversionParameter(IdentifierType.DOCUMENT_NAME,
                         context.getConversionParameter(IdentifierType.DOCUMENT_NAME))
                 .addConversionParameter(IdentifierType.MIME_TYPE,
@@ -130,7 +129,7 @@ public class PdfToImageConverter implements PdfConverter<List<ImageDocument>> {
 
         List<ImageDocument> imageDocuments = new ArrayList<ImageDocument>();
 
-        int[] pageRange = (int[]) context.getConversionParameter(IdentifierType.IMAGE_PAGE_INDICES).getValue();
+        int[] pageRange = (int[]) context.getConversionParameter(IdentifierType.PAGE_INDICES).getValue();
 
         String documentName = (String) context.getConversionParameter(IdentifierType.DOCUMENT_NAME).getValue();
         context.addConversionParameter(IdentifierType.IMAGE_OUTPUT_PREFIX, new StringConversionParameter(documentName));
@@ -158,7 +157,7 @@ public class PdfToImageConverter implements PdfConverter<List<ImageDocument>> {
         String imageNamePrefix = (String) context.getConversionParameter(IdentifierType.IMAGE_OUTPUT_PREFIX).getValue();
         String imageName = generateOutputForImage(imageNamePrefix,pageNumber);
 
-        ConversionContext imageConversionContext = new DefaultConversionContext()
+        ConversionContext imageConversionContext = new ConversionContext()
                 .addConversionParameter(IdentifierType.DOCUMENT_NAME,
                         new StringConversionParameter(imageName))
                 .addConversionParameter(IdentifierType.MIME_TYPE,

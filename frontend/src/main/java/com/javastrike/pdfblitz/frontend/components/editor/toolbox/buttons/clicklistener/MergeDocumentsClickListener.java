@@ -3,7 +3,6 @@ package com.javastrike.pdfblitz.frontend.components.editor.toolbox.buttons.click
 import com.javastrike.pdfblitz.frontend.components.fileupload.UploadType;
 import com.javastrike.pdfblitz.manager.converter.management.ConversionContext;
 import com.javastrike.pdfblitz.manager.converter.management.IdentifierType;
-import com.javastrike.pdfblitz.manager.converter.management.impl.DefaultConversionContext;
 import com.javastrike.pdfblitz.manager.converter.management.impl.StringConversionParameter;
 import com.javastrike.pdfblitz.manager.exception.DocumentOperationException;
 import com.javastrike.pdfblitz.manager.exception.pdfoperations.PdfDocumentOperationException;
@@ -32,7 +31,7 @@ public class MergeDocumentsClickListener extends DocumentOperationButtonClickLis
 
         List<PdfDocument> pdfDocuments;
         try {
-            ConversionContext context = new DefaultConversionContext().
+            ConversionContext context = new ConversionContext().
                     addConversionParameter(IdentifierType.DOCUMENT_NAME, new StringConversionParameter("merged_documents.pdf")).
                     addConversionParameter(IdentifierType.MIME_TYPE, new StringConversionParameter("application/pdf"));
 

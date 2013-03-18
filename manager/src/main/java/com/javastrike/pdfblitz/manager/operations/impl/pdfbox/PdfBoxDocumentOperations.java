@@ -3,7 +3,6 @@ package com.javastrike.pdfblitz.manager.operations.impl.pdfbox;
 import com.javastrike.pdfblitz.manager.converter.management.ConversionContext;
 import com.javastrike.pdfblitz.manager.converter.management.ConverterResolver;
 import com.javastrike.pdfblitz.manager.converter.management.IdentifierType;
-import com.javastrike.pdfblitz.manager.converter.management.impl.DefaultConversionContext;
 import com.javastrike.pdfblitz.manager.converter.management.impl.StringConversionParameter;
 import com.javastrike.pdfblitz.manager.exception.conversion.ConversionException;
 import com.javastrike.pdfblitz.manager.exception.pdfoperations.PageIndicesOutOfRangeException;
@@ -21,12 +20,13 @@ import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.util.PDFMergerUtility;
-import org.junit.Assert;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.testng.Assert.assertNotNull;
 
 /**
  * @author Ruiu Gabriel Mihai (gabriel.ruiu@mail.com)
@@ -45,7 +45,7 @@ public class PdfBoxDocumentOperations  implements PdfDocumentOperations , Conver
 
     public PdfBoxDocumentOperations(ConversionSupport conversionSupport) {
 
-        Assert.assertNotNull("ConversionSupport must not be null",conversionSupport);
+        assertNotNull(conversionSupport, "ConversionSupport must not be null");
         this.conversionSupport = conversionSupport;
     }
 
@@ -216,7 +216,7 @@ public class PdfBoxDocumentOperations  implements PdfDocumentOperations , Conver
     private PdfDocument convertPDDToPdf(PDDocument pdDocument, String pdfDocumentName)
             throws ConversionException{
 
-        ConversionContext context = new DefaultConversionContext()
+        ConversionContext context = new ConversionContext()
                 .addConversionParameter(IdentifierType.DOCUMENT_NAME, new StringConversionParameter(pdfDocumentName))
                 .addConversionParameter(IdentifierType.MIME_TYPE, new StringConversionParameter("application/pdf"));
 

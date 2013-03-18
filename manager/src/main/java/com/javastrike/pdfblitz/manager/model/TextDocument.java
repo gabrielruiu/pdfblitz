@@ -1,8 +1,11 @@
 package com.javastrike.pdfblitz.manager.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * @author Ruiu Gabriel Mihai (gabriel.ruiu@mail.com)
  */
+@XmlRootElement
 public class TextDocument extends Document {
 
 

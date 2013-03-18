@@ -3,7 +3,6 @@ package com.javastrike.pdfblitz.manager.converter.impl.pdfbox;
 import com.javastrike.pdfblitz.manager.converter.impl.document.DocumentStringConverter;
 import com.javastrike.pdfblitz.manager.converter.management.ConversionContext;
 import com.javastrike.pdfblitz.manager.converter.management.IdentifierType;
-import com.javastrike.pdfblitz.manager.converter.management.impl.DefaultConversionContext;
 import com.javastrike.pdfblitz.manager.converter.management.impl.StringConversionParameter;
 import com.javastrike.pdfblitz.manager.converter.pdf.PdfConverter;
 import com.javastrike.pdfblitz.manager.exception.conversion.ConversionException;
@@ -53,7 +52,7 @@ public class TextToPdfConverter implements PdfConverter<TextDocument>{
             PDDocument pdDocument = textToPDF.createPDFFromText(new StringReader(documentContentAsString));
 
             PdfToPDDConverter pdfToPDDConverter = new PdfToPDDConverter();
-            ConversionContext pdfToPDDConversionContext = new DefaultConversionContext()
+            ConversionContext pdfToPDDConversionContext = new ConversionContext()
                     .addConversionParameter(IdentifierType.DOCUMENT_NAME,
                             new StringConversionParameter(replaceTextExtensionWithPdf(textDocument.getName())));
 

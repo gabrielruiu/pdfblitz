@@ -44,7 +44,6 @@ public class PdfBlitzApplication extends TPTApplication implements ApplicationCo
         Window mainWindow = new Window("PdfBlitz");
         mainWindow.setContent(new DocumentToolbox());
         /*mainWindow.setContent(new TestLayout());*/
-        /*mainWindow.setContent(new LocaleTestLayout());*/
         setMainWindow(mainWindow);
     }
 

@@ -30,9 +30,9 @@
 
     <!--Should be enabled when in production mode-->
     <!--<context-param>
-    <description>Vaadin production mode</description>
-    <param-name>productionMode</param-name>
-    <param-value>true</param-value>
+        <description>Vaadin production mode</description>
+        <param-name>productionMode</param-name>
+        <param-value>true</param-value>
     </context-param>-->
 
 </web-app>

@@ -1,20 +1,42 @@
 package com.javastrike.pdfblitz.manager.converter.management;
 
+import com.javastrike.pdfblitz.manager.converter.management.jaxb.ConversionContextXmlAdapter;
+
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
- * Class that holds the additional data needed to make a conversion from a certain type to a Document.
- *
- * @see com.javastrike.pdfblitz.manager.converter.Converter
- *
  * @author Ruiu Gabriel Mihai (gabriel.ruiu@mail.com)
  */
-//TODO: cleanup ConversionContext building, too stuffy
-public interface ConversionContext {
+@XmlRootElement
+public class ConversionContext {
 
-    ConversionContext addConversionParameter(IdentifierType identifier, ConversionParameter parameter);
+    @XmlJavaTypeAdapter(ConversionContextXmlAdapter.class)
+    private Map<IdentifierType,ConversionParameter> conversionParameterMap;
 
-    ConversionContext removeConversionParameter(IdentifierType identifier);
+    public ConversionContext() {
+        this(new HashMap<IdentifierType, ConversionParameter>());
+    }
 
-    ConversionParameter getConversionParameter(IdentifierType identifier);
+    public ConversionContext(Map<IdentifierType, ConversionParameter> conversionParameterMap) {
+        this.conversionParameterMap = conversionParameterMap;
+    }
 
+    public ConversionContext addConversionParameter(IdentifierType identifier, ConversionParameter parameter) {
 
+        conversionParameterMap.put(identifier,parameter);
+        return this;
+    }
+
+    public ConversionContext removeConversionParameter(IdentifierType identifier) {
+
+        conversionParameterMap.remove(identifier);
+        return this;
+    }
+
+    public ConversionParameter getConversionParameter(IdentifierType identifier) {
+        return conversionParameterMap.get(identifier);
+    }
 }

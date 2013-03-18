@@ -2,9 +2,12 @@ package com.javastrike.pdfblitz.manager.converter.management.impl;
 
 import com.javastrike.pdfblitz.manager.converter.management.ConversionParameter;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * @author Ruiu Gabriel Mihai (gabriel.ruiu@1and1.ro)
  */
+@XmlRootElement
 public class IntegerArrayConversionParameter implements ConversionParameter<int[]> {
 
 
