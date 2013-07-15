@@ -8,7 +8,6 @@ import com.javastrike.pdfblitz.manager.model.PdfDocument;
 import com.javastrike.pdfblitz.manager.model.TextDocument;
 import com.javastrike.pdfblitz.service.api.ConversionService;
 import com.javastrike.pdfblitz.service.api.dto.DocumentDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.POST;
@@ -27,8 +26,12 @@ import static com.javastrike.pdfblitz.service.api.paths.ConversionPaths.*;
 @Produces({MediaType.APPLICATION_XML})
 public class ConversionServiceDefault implements ConversionService {
 
-    @Autowired
+
     private DocumentManager documentManager;
+
+    public ConversionServiceDefault() {
+        this.documentManager = new DocumentManager();
+    }
 
     @Path(PDF_TO_IMAGES)
     @POST

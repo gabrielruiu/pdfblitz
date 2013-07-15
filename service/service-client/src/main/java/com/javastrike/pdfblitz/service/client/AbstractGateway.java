@@ -44,6 +44,4 @@ public class AbstractGateway {
 
         return response.getEntity();
     }
-
-
 }

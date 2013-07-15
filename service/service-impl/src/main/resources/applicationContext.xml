@@ -8,5 +8,12 @@
     <context:component-scan base-package="com.javastrike.pdfblitz.service.impl"/>
     <bean id="documentManager" class="com.javastrike.pdfblitz.manager.DocumentManager"/>
 
+    <bean class="com.javastrike.pdfblitz.service.impl.PdfDocumentServiceDefault">
+
+    </bean>
+
+    <bean class="com.javastrike.pdfblitz.service.impl.ConversionServiceDefault">
+
+    </bean>
 </beans>
 

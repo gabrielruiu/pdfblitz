@@ -2,6 +2,7 @@ package com.javastrike.pdfblitz.manager.converter.management;
 
 
 import com.javastrike.pdfblitz.manager.converter.management.impl.IntegerArrayConversionParameter;
+import com.javastrike.pdfblitz.manager.converter.management.impl.IntegerConversionParameter;
 import com.javastrike.pdfblitz.manager.converter.management.impl.StringConversionParameter;
 import com.sun.xml.bind.AnyTypeAdapter;
 
@@ -14,7 +15,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  */
 @XmlType
 @XmlJavaTypeAdapter(AnyTypeAdapter.class)
-@XmlSeeAlso({IntegerArrayConversionParameter.class, IntegerArrayConversionParameter.class, StringConversionParameter.class})
+@XmlSeeAlso({IntegerConversionParameter.class, IntegerArrayConversionParameter.class, StringConversionParameter.class})
 public interface ConversionParameter<TYPE> {
 
     TYPE getValue();

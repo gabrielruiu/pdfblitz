@@ -6,7 +6,6 @@ import com.javastrike.pdfblitz.manager.exception.pdfoperations.PdfDocumentOperat
 import com.javastrike.pdfblitz.manager.model.PdfDocument;
 import com.javastrike.pdfblitz.service.api.PdfDocumentService;
 import com.javastrike.pdfblitz.service.api.dto.DocumentDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.POST;
@@ -25,9 +24,11 @@ import static com.javastrike.pdfblitz.service.api.paths.PdfPaths.*;
 @Produces({MediaType.APPLICATION_XML})
 public class PdfDocumentServiceDefault implements PdfDocumentService {
 
-
-    @Autowired
     private DocumentManager documentManager;
+
+    public PdfDocumentServiceDefault() {
+        this.documentManager = new DocumentManager();
+    }
 
     @POST
     @Path(EXTRACT_PAGES)
