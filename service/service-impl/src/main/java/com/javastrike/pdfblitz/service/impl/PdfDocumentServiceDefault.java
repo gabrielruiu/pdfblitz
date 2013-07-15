@@ -6,7 +6,6 @@ import com.javastrike.pdfblitz.manager.exception.pdfoperations.PdfDocumentOperat
 import com.javastrike.pdfblitz.manager.model.PdfDocument;
 import com.javastrike.pdfblitz.service.api.PdfDocumentService;
 import com.javastrike.pdfblitz.service.api.dto.DocumentDTO;
-import org.springframework.stereotype.Component;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -19,7 +18,6 @@ import static com.javastrike.pdfblitz.service.api.paths.PdfPaths.*;
 /**
  * @author Ruiu Gabriel Mihai (gabriel.ruiu@1and1.ro)
  */
-@Component
 @Path(PDF_SERVICE_ROOT)
 @Produces({MediaType.APPLICATION_XML})
 public class PdfDocumentServiceDefault implements PdfDocumentService {

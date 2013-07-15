@@ -8,7 +8,6 @@ import com.javastrike.pdfblitz.manager.model.PdfDocument;
 import com.javastrike.pdfblitz.manager.model.TextDocument;
 import com.javastrike.pdfblitz.service.api.ConversionService;
 import com.javastrike.pdfblitz.service.api.dto.DocumentDTO;
-import org.springframework.stereotype.Component;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -21,7 +20,6 @@ import static com.javastrike.pdfblitz.service.api.paths.ConversionPaths.*;
 /**
  * @author Ruiu Gabriel Mihai (gabriel.ruiu@mail.com)
  */
-@Component
 @Path(CONVERSION_SERVICE_ROOT)
 @Produces({MediaType.APPLICATION_XML})
 public class ConversionServiceDefault implements ConversionService {
