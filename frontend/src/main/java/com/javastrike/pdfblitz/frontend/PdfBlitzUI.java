@@ -3,9 +3,11 @@ package com.javastrike.pdfblitz.frontend;
 import com.javastrike.pdfblitz.frontend.components.editor.DocumentToolbox;
 import com.javastrike.pdfblitz.frontend.theme.PdfBlitzTheme;
 import com.javastrike.pdfblitz.manager.DocumentManager;
-import com.vaadin.service.ApplicationContext;
-import com.vaadin.ui.Window;
-import eu.livotov.tpt.TPTApplication;
+import com.vaadin.annotations.PreserveOnRefresh;
+import com.vaadin.annotations.Theme;
+import com.vaadin.server.VaadinRequest;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContextAware;
@@ -22,8 +24,9 @@ import java.util.Locale;
  */
 
 @SuppressWarnings("serial")
-public class PdfBlitzApplication extends TPTApplication implements ApplicationContext.TransactionListener,
-        ApplicationContextAware {
+@Theme(PdfBlitzTheme.THEME_NAME)
+@PreserveOnRefresh
+public class PdfBlitzUI extends UI implements ApplicationContextAware {
 
     @Autowired
     private DocumentManager documentManager;
@@ -35,21 +38,18 @@ public class PdfBlitzApplication extends TPTApplication implements ApplicationCo
     }
 
     @Override
-    public void applicationInit() {
-
-        setTheme(PdfBlitzTheme.THEME_NAME);
+    protected void init(VaadinRequest request) {
 
         setLocale(Locale.ENGLISH);
+        getPage().setTitle("PdfBlitz");
 
-        Window mainWindow = new Window("PdfBlitz");
-        mainWindow.setContent(new DocumentToolbox());
-        /*mainWindow.setContent(new TestLayout());*/
-        setMainWindow(mainWindow);
-    }
+        VerticalLayout content = new VerticalLayout();
+        content.setSizeFull();
+        setContent(content);
 
-    @Override
-    public void firstApplicationStartup() {
-
+        DocumentToolbox documentToolbox = new DocumentToolbox();
+        content.addComponent(documentToolbox);
+        content.setExpandRatio(documentToolbox, 1);
     }
 
     @Override

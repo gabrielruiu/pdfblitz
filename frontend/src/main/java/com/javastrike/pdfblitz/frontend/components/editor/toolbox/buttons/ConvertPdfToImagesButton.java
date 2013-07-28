@@ -1,8 +1,9 @@
 package com.javastrike.pdfblitz.frontend.components.editor.toolbox.buttons;
 
-import com.javastrike.pdfblitz.frontend.PdfBlitzApplication;
+import com.javastrike.pdfblitz.frontend.PdfBlitzUI;
 import com.javastrike.pdfblitz.frontend.components.editor.toolbox.buttons.clicklistener.ConvertPdfToImagesClickListener;
-import com.vaadin.terminal.ThemeResource;
+import com.vaadin.server.ThemeResource;
+
 
 /**
  * @author Ruiu Gabriel Mihai (gabriel.ruiu@mail.com)
@@ -10,7 +11,7 @@ import com.vaadin.terminal.ThemeResource;
 public class ConvertPdfToImagesButton extends DocumentOperationButton {
 
     public ConvertPdfToImagesButton() {
-        super(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+        super(((PdfBlitzUI) PdfBlitzUI.getCurrent()).
                 getMessage("button.convert.pdftoimages"), new ConvertPdfToImagesClickListener(),
         		new ThemeResource("icons/operations/pdftoimage.png"));
     }

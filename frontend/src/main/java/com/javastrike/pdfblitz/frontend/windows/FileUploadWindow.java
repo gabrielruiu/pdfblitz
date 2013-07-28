@@ -1,12 +1,9 @@
 package com.javastrike.pdfblitz.frontend.windows;
 
-import com.javastrike.pdfblitz.frontend.PdfBlitzApplication;
+import com.javastrike.pdfblitz.frontend.PdfBlitzUI;
 import com.javastrike.pdfblitz.frontend.components.fileupload.DocumentUploader;
 import com.javastrike.pdfblitz.frontend.components.fileupload.UploadType;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Upload;
-import com.vaadin.ui.Window;
+import com.vaadin.ui.*;
 
 /**
  * Modal window that wraps the DocumentUploader component.
@@ -25,7 +22,7 @@ import com.vaadin.ui.Window;
  * @author Ruiu Gabriel Mihai (gabriel.ruiu@mail.com)
  */
 @SuppressWarnings("serial")
-public class FileUploadWindow extends Window{
+public class FileUploadWindow extends Window {
 
 
     private DocumentUploader documentUploader;
@@ -34,7 +31,7 @@ public class FileUploadWindow extends Window{
 
     public FileUploadWindow(UploadType uploadType) {
 
-        super(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).getMessage("fileuploadwindow.title"));
+        super(((PdfBlitzUI) PdfBlitzUI.getCurrent()).getMessage("fileuploadwindow.title"));
         configureWindow(uploadType);
         initializeComponents();
         drawContents();
@@ -57,7 +54,7 @@ public class FileUploadWindow extends Window{
         this.uploadType = uploadType;
         setModal(true);
         center();
-        setWidth(400,UNITS_PIXELS);
+        setWidth(400, Unit.PIXELS);
     }
 
     private void initializeComponents(){
@@ -69,7 +66,7 @@ public class FileUploadWindow extends Window{
         if (uploadType == UploadType.MULTIPLE) {
 
             finishedWithUploads = new Button(
-                    ((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+                    ((PdfBlitzUI) PdfBlitzUI.getCurrent()).
                             getMessage("fileuploader.multiple.button.finish"));
             documentUploader.addComponent(finishedWithUploads);
             documentUploader.setComponentAlignment(finishedWithUploads, Alignment.MIDDLE_CENTER);
@@ -78,13 +75,15 @@ public class FileUploadWindow extends Window{
         documentUploader.addListener(new Upload.FailedListener() {
             @Override
             public void uploadFailed(Upload.FailedEvent event) {
-                showNotification(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
-                        getMessage("notification.fileupload.failed"),Notification.TYPE_ERROR_MESSAGE);
+                Notification.show(((PdfBlitzUI) PdfBlitzUI.getCurrent()).
+                        getMessage("notification.fileupload.failed"), Notification.Type.ERROR_MESSAGE);
             }
         });
     }
 
     private void drawContents(){
-        addComponent(documentUploader);
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.addComponent(documentUploader);
+        setContent(layout);
     }
 }

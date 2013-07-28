@@ -1,6 +1,6 @@
 package com.javastrike.pdfblitz.frontend.components.fileupload;
 
-import com.javastrike.pdfblitz.frontend.PdfBlitzApplication;
+import com.javastrike.pdfblitz.frontend.PdfBlitzUI;
 import com.javastrike.pdfblitz.manager.model.Document;
 import com.javastrike.pdfblitz.manager.model.MimeType;
 import com.vaadin.ui.*;
@@ -89,7 +89,7 @@ public class SingleFileUploader extends FileUploader<Document>{
         uploadReceiver = new SingleUploadReceiver();
         uploadButton = new Upload(null, uploadReceiver);
         configureUploadListeners();
-        cancelUploadButton = new Button(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+        cancelUploadButton = new Button(((PdfBlitzUI) PdfBlitzUI.getCurrent()).
                 getMessage("fileuploader.single.button.cancel"));
         progressIndicator = new ProgressIndicator();
         uploadState = new Label();
@@ -109,7 +109,7 @@ public class SingleFileUploader extends FileUploader<Document>{
                 progressIndicator.setPollingInterval(500); // hit server frequently to get
                 textualProgress.setVisible(true);
                 // updates to client
-                uploadState.setValue(((PdfBlitzApplication) PdfBlitzApplication.getCurrentApplication()).
+                uploadState.setValue(((PdfBlitzUI) PdfBlitzUI.getCurrent()).
                         getMessage("fileuploader.single.upload.started"));
                 fileName.setValue(event.getFilename());
 
@@ -123,7 +123,7 @@ public class SingleFileUploader extends FileUploader<Document>{
 
                 // this method gets called several times during the update
                 progressIndicator.setValue(new Float(readBytes / (float) contentLength));
-                textualProgress.setValue(((PdfBlitzApplication) PdfBlitzApplication.getCurrentApplication()).
+                textualProgress.setValue(((PdfBlitzUI) PdfBlitzUI.getCurrent()).
                         getMessage("fileuploader.single.upload.progress", new Object[]{String.valueOf(readBytes),
                                 String.valueOf(contentLength)}));
             }
@@ -148,7 +148,7 @@ public class SingleFileUploader extends FileUploader<Document>{
             @Override
             public void uploadFinished(Upload.FinishedEvent event) {
                 IOUtils.closeQuietly(contentStream);
-                uploadState.setValue(((PdfBlitzApplication) PdfBlitzApplication.getCurrentApplication()).
+                uploadState.setValue(((PdfBlitzUI) PdfBlitzUI.getCurrent()).
                         getMessage("fileuploader.single.upload.finished"));
                 progressIndicator.setVisible(false);
                 textualProgress.setVisible(false);
@@ -161,7 +161,7 @@ public class SingleFileUploader extends FileUploader<Document>{
 
         //upload field
         uploadButton.setImmediate(true);
-        uploadButton.setButtonCaption(((PdfBlitzApplication) PdfBlitzApplication.getCurrentApplication()).
+        uploadButton.setButtonCaption(((PdfBlitzUI) PdfBlitzUI.getCurrent()).
                 getMessage("fileuploader.single.button.browse"));
         formLayout.addComponent(uploadButton);
 
@@ -181,18 +181,18 @@ public class SingleFileUploader extends FileUploader<Document>{
 
         uploadStateLayout.addComponent(uploadState);
         uploadStateLayout.addComponent(cancelUploadButton);
-        uploadStateLayout.setCaption(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+        uploadStateLayout.setCaption(((PdfBlitzUI) PdfBlitzUI.getCurrent()).
                 getMessage("fileuploader.single.panel.currentstate"));
-        uploadState.setValue(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+        uploadState.setValue(((PdfBlitzUI) PdfBlitzUI.getCurrent()).
                 getMessage("fileuploader.single.upload.finished"));
         formLayout.addComponent(uploadStateLayout);
-        fileName.setCaption(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+        fileName.setCaption(((PdfBlitzUI) PdfBlitzUI.getCurrent()).
                 getMessage("fileuploader.single.panel.filename"));
         formLayout.addComponent(fileName);
 
 
         //progress indicator
-        progressIndicator.setCaption(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+        progressIndicator.setCaption(((PdfBlitzUI) PdfBlitzUI.getCurrent()).
                 getMessage("fileuploader.single.progressindicator.caption"));
         progressIndicator.setVisible(false);
         formLayout.addComponent(progressIndicator);

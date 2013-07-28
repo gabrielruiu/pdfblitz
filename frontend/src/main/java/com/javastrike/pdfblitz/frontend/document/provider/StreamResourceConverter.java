@@ -1,6 +1,6 @@
 package com.javastrike.pdfblitz.frontend.document.provider;
 
-import com.javastrike.pdfblitz.frontend.PdfBlitzApplication;
+import com.javastrike.pdfblitz.frontend.PdfBlitzUI;
 import com.javastrike.pdfblitz.manager.converter.Converter;
 import com.javastrike.pdfblitz.manager.converter.management.ConversionContext;
 import com.javastrike.pdfblitz.manager.exception.conversion.ConversionException;
@@ -40,7 +40,7 @@ public class StreamResourceConverter implements Converter<StreamResource, Docume
             }
         };
         StreamResource streamResource =
-                new StreamResource(streamSource, document.getName(), PdfBlitzApplication.getCurrentApplication());
+                new StreamResource(streamSource, document.getName(), PdfBlitzUI.getCurrent());
         return streamResource;
     }
 

@@ -10,7 +10,7 @@
         <servlet-class>com.javastrike.pdfblitz.frontend.spring.SpringVaadinServlet</servlet-class>
         <init-param>
             <param-name>application</param-name>
-            <param-value>com.javastrike.pdfblitz.frontend.PdfBlitzApplication</param-value>
+            <param-value>com.javastrike.pdfblitz.frontend.PdfBlitzUI</param-value>
         </init-param>
     </servlet>
 

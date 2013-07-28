@@ -1,6 +1,6 @@
 package com.javastrike.pdfblitz.frontend.components.editor.toolbox.buttons.clicklistener;
 
-import com.javastrike.pdfblitz.frontend.PdfBlitzApplication;
+import com.javastrike.pdfblitz.frontend.PdfBlitzUI;
 import com.javastrike.pdfblitz.frontend.components.fileupload.UploadType;
 import com.javastrike.pdfblitz.frontend.document.FileStreamDownloadResource;
 import com.javastrike.pdfblitz.frontend.utils.ArchiveUtils;
@@ -15,11 +15,8 @@ import com.javastrike.pdfblitz.manager.exception.pdfoperations.PdfDocumentOperat
 import com.javastrike.pdfblitz.manager.model.Document;
 import com.javastrike.pdfblitz.manager.operations.ConversionOperations;
 import com.javastrike.pdfblitz.manager.operations.PdfDocumentOperations;
-import com.vaadin.terminal.StreamResource;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Layout;
-import com.vaadin.ui.Upload;
-import com.vaadin.ui.Window;
+import com.vaadin.server.StreamResource;
+import com.vaadin.ui.*;
 import org.apache.log4j.Logger;
 
 import java.io.ByteArrayInputStream;
@@ -70,10 +67,10 @@ public abstract class DocumentOperationButtonClickListener implements Button.Cli
 
 
     private void initDocumentOperations() {
-        pdfDocumentOperations = ((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+        pdfDocumentOperations = ((PdfBlitzUI) PdfBlitzUI.getCurrent()).
                 getDocumentManager().getDocumentOperations();
 
-        conversionOperations =  ((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+        conversionOperations =  ((PdfBlitzUI) PdfBlitzUI.getCurrent()).
                 getDocumentManager().getConversionOperations();
     }
 
@@ -82,7 +79,7 @@ public abstract class DocumentOperationButtonClickListener implements Button.Cli
         filesDownloaded = new ArrayList<Document>();
         final FileUploadWindow fileUploadWindow = new FileUploadWindow(uploadType);
 
-        (PdfBlitzApplication.getCurrentApplication()).getMainWindow().addWindow(fileUploadWindow);
+        PdfBlitzUI.getCurrent().addWindow(fileUploadWindow);
 
         if (uploadType == UploadType.MULTIPLE) {
             fileUploadWindow.addClickListener(new Button.ClickListener() {
@@ -108,9 +105,7 @@ public abstract class DocumentOperationButtonClickListener implements Button.Cli
 
 
     private void openOperationWindow(){
-
-        ((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).getMainWindow().addWindow(
-                new OperationWindow());
+       PdfBlitzUI.getCurrent().addWindow(new OperationWindow());
     }
 
     protected abstract List<? extends Document> performOperationOnFiles(List<? extends Document> documents)
@@ -130,8 +125,7 @@ public abstract class DocumentOperationButtonClickListener implements Button.Cli
     private void getDownloadedFilesFromFileUploadWindow(FileUploadWindow fileUploadWindow) {
 
         filesDownloaded = fileUploadWindow.getDocumentUploader().getPayload();
-        ((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).getMainWindow().
-                removeWindow(fileUploadWindow);
+        PdfBlitzUI.getCurrent().removeWindow(fileUploadWindow);
     }
 
     private void processFiles() {
@@ -145,7 +139,7 @@ public abstract class DocumentOperationButtonClickListener implements Button.Cli
         }
     }
 
-    //TODO: move to PdfBlitzApplication?
+    //TODO: move to PdfBlitzUI?
     private void showError(DocumentOperationException operationException) {
 
         String errorMessage = "Unknown error occured";
@@ -165,8 +159,7 @@ public abstract class DocumentOperationButtonClickListener implements Button.Cli
             errorMessage = "The page indices are invalid (eg. out of range, invalid expression";
         }
 
-        PdfBlitzApplication.getCurrentApplication().getMainWindow()
-                .showNotification(errorMessage, Window.Notification.TYPE_ERROR_MESSAGE);
+        Notification.show(errorMessage, Notification.Type.ERROR_MESSAGE);
     }
 
 
@@ -185,12 +178,9 @@ public abstract class DocumentOperationButtonClickListener implements Button.Cli
                 }
             };
 
+            PdfBlitzUI.getCurrent().getMainWindow().open(
+                    new FileStreamDownloadResource(streamSource, ArchiveUtils.generateNameForArchive()));
 
-            PdfBlitzApplication.getCurrentApplication().getMainWindow().open(
-                    new FileStreamDownloadResource(streamSource,
-                            ArchiveUtils.generateNameForArchive(),
-                            PdfBlitzApplication.getCurrentApplication())
-            );
 
         } catch (ArchivingException e) {
             LOG.error("Error archiving documents", e);
@@ -198,7 +188,7 @@ public abstract class DocumentOperationButtonClickListener implements Button.Cli
         }
     }
 
-    //TODO: convinience class that closes windows without calling long static method from PdfBlitzApplication
+    //TODO: convinience class that closes windows without calling long static method from PdfBlitzUI
     private class OperationWindow extends Window {
 
 
@@ -208,18 +198,22 @@ public abstract class DocumentOperationButtonClickListener implements Button.Cli
 
             setModal(true);
             center();
-            setWidth(400, UNITS_PIXELS);
+            setWidth(400, Unit.PIXELS);
 
-            addComponent(getOperationInterface());
-            addComponent(new Button(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
-                    getMessage("documentoperation.button"),new Button.ClickListener() {
+            HorizontalLayout layout = new HorizontalLayout();
+
+            layout.addComponent(getOperationInterface());
+            layout.addComponent(new Button(((PdfBlitzUI) PdfBlitzUI.getCurrent()).
+                    getMessage("documentoperation.button"), new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
 
                     processFiles();
-                    PdfBlitzApplication.getCurrentApplication().getMainWindow().removeWindow(OperationWindow.this);
+                    PdfBlitzUI.getCurrent().removeWindow(OperationWindow.this);
                 }
             }));
+
+            setContent(layout);
         }
     }
 }

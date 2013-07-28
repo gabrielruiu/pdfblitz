@@ -1,7 +1,6 @@
 package com.javastrike.pdfblitz.frontend.spring;
 
-import com.vaadin.Application;
-import com.vaadin.terminal.gwt.server.AbstractApplicationServlet;
+
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 

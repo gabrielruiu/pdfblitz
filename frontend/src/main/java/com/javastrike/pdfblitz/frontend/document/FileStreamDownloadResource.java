@@ -1,8 +1,8 @@
 package com.javastrike.pdfblitz.frontend.document;
 
-import com.vaadin.Application;
-import com.vaadin.terminal.DownloadStream;
-import com.vaadin.terminal.StreamResource;
+
+import com.vaadin.server.DownloadStream;
+import com.vaadin.server.StreamResource;
 import org.apache.log4j.Logger;
 
 import java.io.UnsupportedEncodingException;
@@ -17,8 +17,8 @@ public class FileStreamDownloadResource extends StreamResource {
     private static final Logger LOG = Logger.getLogger(FileStreamDownloadResource.class);
 
 
-    public FileStreamDownloadResource(StreamSource streamSource, String filename, Application application) {
-        super(streamSource, filename, application);
+    public FileStreamDownloadResource(StreamSource streamSource, String filename) {
+        super(streamSource, filename);
     }
 
 

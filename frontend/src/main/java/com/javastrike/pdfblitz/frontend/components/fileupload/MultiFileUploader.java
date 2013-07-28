@@ -1,6 +1,6 @@
 package com.javastrike.pdfblitz.frontend.components.fileupload;
 
-import com.javastrike.pdfblitz.frontend.PdfBlitzApplication;
+import com.javastrike.pdfblitz.frontend.PdfBlitzUI;
 import com.javastrike.pdfblitz.manager.model.Document;
 import com.vaadin.ui.ListSelect;
 import com.vaadin.ui.Upload;
@@ -83,7 +83,7 @@ public class MultiFileUploader extends FileUploader<List<Document>> {
             }
         });
 
-        listOfUploadedFiles = new ListSelect(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+        listOfUploadedFiles = new ListSelect(((PdfBlitzUI) PdfBlitzUI.getCurrent()).
                 getMessage("fileuploader.multiple.filelist.title"));
         listOfUploadedFiles.setNullSelectionAllowed(false);
         listOfUploadedFiles.setWidth(350, UNITS_PIXELS);

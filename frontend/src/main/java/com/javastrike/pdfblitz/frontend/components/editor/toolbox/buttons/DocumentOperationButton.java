@@ -2,7 +2,7 @@ package com.javastrike.pdfblitz.frontend.components.editor.toolbox.buttons;
 
 import com.javastrike.pdfblitz.frontend.components.editor.toolbox.buttons.clicklistener.DocumentOperationButtonClickListener;
 import com.javastrike.pdfblitz.frontend.theme.PdfBlitzTheme;
-import com.vaadin.terminal.ThemeResource;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Button;
 
 /**

@@ -1,6 +1,6 @@
 package com.javastrike.pdfblitz.frontend.components.editor.toolbox.buttons.clicklistener;
 
-import com.javastrike.pdfblitz.frontend.PdfBlitzApplication;
+import com.javastrike.pdfblitz.frontend.PdfBlitzUI;
 import com.javastrike.pdfblitz.frontend.components.fileupload.UploadType;
 import com.javastrike.pdfblitz.frontend.exception.InvalidPageIndices;
 import com.javastrike.pdfblitz.frontend.utils.IntegerExpressionProcessor;
@@ -54,11 +54,11 @@ public class SplitPagesClickListener extends DocumentOperationButtonClickListene
         layout.setSpacing(true);
         layout.setSizeFull();
 
-        Label informationText = new Label(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+        Label informationText = new Label(((PdfBlitzUI) PdfBlitzUI.getCurrent()).
                 getMessage("documentoperation.message.split"));
 
         TextField inputField = new TextField();
-        inputField.setInputPrompt(((PdfBlitzApplication)PdfBlitzApplication.getCurrentApplication()).
+        inputField.setInputPrompt(((PdfBlitzUI) PdfBlitzUI.getCurrent()).
                 getMessage("documentoperation.message.indexexample"));
         inputField.addListener(new Property.ValueChangeListener() {
             @Override
@@ -69,9 +69,7 @@ public class SplitPagesClickListener extends DocumentOperationButtonClickListene
                         pageIndices = IntegerExpressionProcessor
                                 .processIntegerExpression(valueChangeEvent.getProperty().toString());
                     } catch (InvalidPageIndices invalidPageIndices) {
-                        PdfBlitzApplication.getCurrentApplication().getMainWindow()
-                                .showNotification("The page indices expression is invalid",
-                                        Window.Notification.TYPE_ERROR_MESSAGE);
+                        Notification.show("The page indices expression is invalid", Notification.Type.ERROR_MESSAGE);
                     }
                 }
             }
