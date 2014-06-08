@@ -24,11 +24,11 @@ public class DefaultConverterResolver implements ConverterResolver {
     public Converter getConverter(Class documentClass, Class conversionClass) {
 
         Converter documentConverter = null;
-        for (Converter converter : registry.getDocumentConverters(documentClass)){
+        /*for (Converter converter : registry.getDocumentConverters(documentClass)){
             if (converter.supports(conversionClass)){
                 documentConverter = converter;
             }
-        }
+        }*/
         return documentConverter;
     }
 

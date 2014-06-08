@@ -19,7 +19,7 @@
 
 	<properties>
 		<pdfblitz.version>1.0-SNAPSHOT</pdfblitz.version>
-		<spring.version>3.1.1.RELEASE</spring.version>
+		<spring.version>4.0.5.RELEASE</spring.version>
 		<aspectj.version>1.6.12</aspectj.version>
 		<log4j.version>1.2.17</log4j.version>
 	</properties>
@@ -41,15 +41,31 @@
         </plugins>
     </build>
 
-	<dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>1.2.17</version>
+            </dependency>
 
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>${log4j.version}</version>
-		</dependency>
+            <!-- SPRING FRAMEWORK -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
-
-
-	</dependencies>
 </project>
