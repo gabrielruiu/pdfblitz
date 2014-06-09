@@ -9,8 +9,11 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.INavbarComponent;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.ImmutableNavbarComponent;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.resource.PackageResourceReference;
 
 /**
  * @author Ruiu Gabriel Mihai (gabriel.ruiu@mail.com)
@@ -39,6 +42,13 @@ public class PdfBlitzPage extends WebPage {
 
     protected void generateNavbar() {
         add(new PdfBLitzNavBar("navbar"));
+    }
+
+    @Override
+    public void renderHead(IHeaderResponse response) {
+        super.renderHead(response);
+        response.render(JavaScriptHeaderItem.forUrl("//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53954fc92b9605b7"));
+        response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(PdfBlitzPage.class, "addthis.js")));
     }
 
     private class PdfBLitzNavBar extends Navbar {
