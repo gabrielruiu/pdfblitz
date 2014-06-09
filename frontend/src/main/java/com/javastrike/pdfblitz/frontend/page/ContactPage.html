@@ -7,16 +7,22 @@
 <wicket:extend>
 
     <div class="row">
+
         <div class="col-sm-2 col-md-2">
             <img wicket:id="gravatar-image" class="img-rounded img-responsive" />
         </div>
+
         <div class="col-sm-4 col-md-4">
             <blockquote>
                 <p>Ruiu Gabriel Mihai</p> <small><cite title="Source Title">Bucharest, Romania  <i class="glyphicon glyphicon-map-marker"></i></cite></small>
             </blockquote>
-            <p> <i class="glyphicon glyphicon-envelope"></i> gabriel.ruiu@mail.com
-                <br /> <i class="glyphicon glyphicon-globe"></i> www.gabrielruiu.com
-                <br /> <i class="glyphicon glyphicon-gift"></i> August 26, 1989
+
+            <p>
+                <a wicket:id="reference-link-website"/>
+                <a wicket:id="reference-link-mail"/>
+                <a wicket:id="reference-link-github"/>
+                <a wicket:id="reference-link-linkedin"/>
+                <a wicket:id="reference-link-stackoverflow"/>
             </p>
         </div>
     </div>

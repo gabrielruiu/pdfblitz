@@ -9,6 +9,8 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.INavbarComponent;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.ImmutableNavbarComponent;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
+import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCssReference;
+import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
@@ -47,8 +49,13 @@ public class PdfBlitzPage extends WebPage {
     @Override
     public void renderHead(IHeaderResponse response) {
         super.renderHead(response);
+
+        //AddThis toolbars
         response.render(JavaScriptHeaderItem.forUrl("//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53954fc92b9605b7"));
         response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(PdfBlitzPage.class, "addthis.js")));
+
+        //FontAwesome
+        response.render(CssHeaderItem.forReference(FontAwesomeCssReference.instance()));
     }
 
     private class PdfBLitzNavBar extends Navbar {
