@@ -87,7 +87,7 @@
         <!--http://stackoverflow.com/questions/18391461/java-wicket-compile-basic-hello-world-with-resources-->
         <resources>
             <resource>
-                <filtering>false</filtering>
+                <filtering>true</filtering>
                 <directory>src/main/resources</directory>
             </resource>
             <resource>

@@ -12,20 +12,27 @@ import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.ImmutableNavbarCo
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
 import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCssReference;
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
-import org.apache.wicket.markup.head.JavaScriptReferenceHeaderItem;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.template.PackageTextTemplate;
+import org.springframework.core.env.Environment;
 
 /**
  * @author Ruiu Gabriel Mihai (gabriel.ruiu@mail.com)
  */
 public class PdfBlitzPage extends WebPage {
+
+    @SpringBean
+    private Environment env;
 
     @Override
     protected void onInitialize() {
@@ -33,7 +40,8 @@ public class PdfBlitzPage extends WebPage {
         add(new ContainerBehavior());
         add(generateHtmlTag());
         generateMetaTags();
-        generateNavbar();
+        createNavbar("navbar");
+        createFooter("footer");
     }
 
     protected HtmlTag generateHtmlTag() {
@@ -47,8 +55,12 @@ public class PdfBlitzPage extends WebPage {
         add(new MetaTag("author", Model.of("author"), Model.of("Ruiu Gabriel Mihai <gabriel.ruiu@mail.com>")));
     }
 
-    protected void generateNavbar() {
-        add(new PdfBLitzNavBar("navbar"));
+    protected void createNavbar(String id) {
+        add(new PdfBlitzNavBar(id));
+    }
+
+    protected void createFooter(String id) {
+        add(new PdfBlitzFooter(id));
     }
 
     @Override
@@ -73,9 +85,9 @@ public class PdfBlitzPage extends WebPage {
         return ((PdfBlitzApplication)getApplication()).getActiveProfile();
     }
 
-    private class PdfBLitzNavBar extends Navbar {
+    private class PdfBlitzNavBar extends Navbar {
 
-        private PdfBLitzNavBar(String componentId) {
+        private PdfBlitzNavBar(String componentId) {
             super(componentId);
         }
 
@@ -97,6 +109,21 @@ public class PdfBlitzPage extends WebPage {
         private INavbarComponent getContactLink() {
             NavbarButton<ContactPage> contactLink = new NavbarButton<ContactPage>(ContactPage.class, Model.of("Contact"));
             return new ImmutableNavbarComponent(contactLink);
+        }
+    }
+
+    private class PdfBlitzFooter extends Panel {
+
+        private PdfBlitzFooter(String id) {
+            super(id);
+        }
+
+        @Override
+        protected void onInitialize() {
+            super.onInitialize();
+            Label projectVersionLabel = new Label("project-version", env.getProperty("app.version"));
+            projectVersionLabel.add(new AttributeModifier("class","muted"));
+            add(projectVersionLabel);
         }
     }
 

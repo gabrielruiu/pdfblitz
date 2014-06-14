@@ -63,8 +63,6 @@ public class PdfBlitzApplication extends WebApplication implements ApplicationCo
 
     private void configureSpring() {
         getComponentInstantiationListeners().add(new SpringComponentInjector(this, applicationContext));
-        //TODO: add Spring as a message provider (http://www.jroller.com/eyallupu/entry/spring_as_a_message_provider)
-        // http://wicket.apache.org/guide/guide/i18n.html
     }
 
     private void configureBootstrap() {
