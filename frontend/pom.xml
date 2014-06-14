@@ -27,6 +27,7 @@
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
         </dependency>
         <!-- INTERNAL DEPENDENCIES -->
         <dependency>
@@ -83,7 +84,6 @@
     </dependencies>
 
     <build>
-        <finalName>pdfblitz-frontend</finalName>
         <!--http://stackoverflow.com/questions/18391461/java-wicket-compile-basic-hello-world-with-resources-->
         <resources>
             <resource>
