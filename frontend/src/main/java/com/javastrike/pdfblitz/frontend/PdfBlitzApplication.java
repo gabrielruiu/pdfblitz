@@ -1,5 +1,6 @@
 package com.javastrike.pdfblitz.frontend;
 
+import com.javastrike.pdfblitz.frontend.config.ActiveProfile;
 import com.javastrike.pdfblitz.frontend.page.ContactPage;
 import com.javastrike.pdfblitz.frontend.page.DashboardPage;
 import de.agilecoders.wicket.core.Bootstrap;
@@ -25,6 +26,7 @@ import org.springframework.core.env.Environment;
 public class PdfBlitzApplication extends WebApplication implements ApplicationContextAware {
 
     private ApplicationContext applicationContext;
+    private ActiveProfile activeProfile;
 
     @Override
     protected void init() {
@@ -43,11 +45,15 @@ public class PdfBlitzApplication extends WebApplication implements ApplicationCo
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
+        this.activeProfile = ActiveProfile.valueOf(applicationContext.getEnvironment().getProperty("spring.profiles.active", "dev").toUpperCase());
+    }
+
+    public ActiveProfile getActiveProfile() {
+        return activeProfile;
     }
 
     private void mountResources() {
-        String currentProfile = applicationContext.getEnvironment().getProperty("spring.profiles.active", "dev");
-        mountResource("/robots.txt", new PackageResourceReference(PdfBlitzApplication.class, "properties/" + currentProfile + "/robots.txt"));
+        mountResource("/robots.txt", new PackageResourceReference(PdfBlitzApplication.class, "properties/" + activeProfile.name().toLowerCase() + "/robots.txt"));
     }
 
     private void configureMountPaths() {
