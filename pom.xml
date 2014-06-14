@@ -5,7 +5,7 @@
 
 	<groupId>com.javastrike</groupId>
 	<artifactId>pdfblitz</artifactId>
-	<version>${pdfblitz.version}</version>
+	<version>1.0-SNAPSHOT</version>
 
 	<name>PdfBlitz</name>
 
@@ -18,7 +18,6 @@
     </modules>
 
 	<properties>
-		<pdfblitz.version>1.0-SNAPSHOT</pdfblitz.version>
 		<spring.version>4.0.5.RELEASE</spring.version>
 		<aspectj.version>1.6.12</aspectj.version>
 		<log4j.version>1.2.17</log4j.version>
