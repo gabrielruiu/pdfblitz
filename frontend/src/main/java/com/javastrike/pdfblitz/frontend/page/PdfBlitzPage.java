@@ -1,5 +1,7 @@
 package com.javastrike.pdfblitz.frontend.page;
 
+import com.javastrike.pdfblitz.frontend.PdfBlitzApplication;
+import com.javastrike.pdfblitz.frontend.config.ActiveProfile;
 import de.agilecoders.wicket.core.markup.html.bootstrap.html.ChromeFrameMetaTag;
 import de.agilecoders.wicket.core.markup.html.bootstrap.html.HtmlTag;
 import de.agilecoders.wicket.core.markup.html.bootstrap.html.MetaTag;
@@ -13,9 +15,12 @@ import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.FontAwesomeCs
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.JavaScriptReferenceHeaderItem;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.util.template.PackageTextTemplate;
 
 /**
  * @author Ruiu Gabriel Mihai (gabriel.ruiu@mail.com)
@@ -56,6 +61,16 @@ public class PdfBlitzPage extends WebPage {
 
         //FontAwesome
         response.render(CssHeaderItem.forReference(FontAwesomeCssReference.instance()));
+
+        //GoogleAnalytics
+        if (getActiveProfile().equals(ActiveProfile.PROD)) {
+            response.render(OnDomReadyHeaderItem.forScript(new PackageTextTemplate(PdfBlitzApplication.class, "properties/prod/google-analytics.js").getString()));
+        }
+
+    }
+
+    public ActiveProfile getActiveProfile() {
+        return ((PdfBlitzApplication)getApplication()).getActiveProfile();
     }
 
     private class PdfBLitzNavBar extends Navbar {
