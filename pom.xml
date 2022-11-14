@@ -18,7 +18,7 @@
     </modules>
 
 	<properties>
-		<spring.version>4.0.5.RELEASE</spring.version>
+		<spring.version>4.2.7.RELEASE</spring.version>
 		<aspectj.version>1.6.12</aspectj.version>
 		<log4j.version>1.2.17</log4j.version>
 	</properties>
